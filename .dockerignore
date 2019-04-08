@@ -1,0 +1,13 @@
+npm-debug.log*
+selenium-debug.log
+.nuxt/
+/package-lock.json
+*.tar
+*.md
+
+# editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

@@ -179,9 +179,9 @@
   </div>
 </template>
 <script>
-  import {fetchList,closeOrder,deleteOrder} from '@/api/order'
+  import {fetchList,closeOrder,deleteOrder} from '@/api/account'
   import {formatDate} from '@/utils/date';
-  import LogisticsDialog from '@/views/oms/order/components/logisticsDialog';
+  import LogisticsDialog from '@/views/user/account/components/logisticsDialog';
   const defaultListQuery = {
     pageNum: 1,
     pageSize: 10,
@@ -319,7 +319,7 @@
         this.multipleSelection = val;
       },
       handleViewOrder(index, row){
-        this.$router.push({path:'/oms/orderDetail',query:{id:row.id}})
+        this.$router.push({path:'/user/orderDetail',query:{id:row.id}})
       },
       handleCloseOrder(index, row){
         this.closeOrder.dialogVisible=true;
@@ -327,7 +327,7 @@
       },
       handleDeliveryOrder(index, row){
         let listItem = this.covertOrder(row);
-        this.$router.push({path:'/oms/deliverOrderList',query:{list:[listItem]}})
+        this.$router.push({path:'/user/deliverOrderList',query:{list:[listItem]}})
       },
       handleViewLogistics(index, row){
         this.logisticsDialogVisible=true;
@@ -362,7 +362,7 @@
             });
             return;
           }
-          this.$router.push({path:'/oms/deliverOrderList',query:{list:list}})
+          this.$router.push({path:'/user/deliverOrderList',query:{list:list}})
         }else if(this.operateType===2){
           //关闭订单
           this.closeOrder.orderIds=[];

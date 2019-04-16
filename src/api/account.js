@@ -1,20 +1,28 @@
 import request from '@/utils/request'
+
 export function fetchList(params) {
   return request({
-    url:'user/mgt/account/list/page',
-    method:'post',
-    headers:{'Content-Type': 'application/json'},
+    url: 'user/mgt/account/list/page',
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
     transformRequest: [function (data) {
       return JSON.stringify(data);
     }],
-    data:params
+    data: params
   })
 }
 
 export function deleteAccount(id) {
   return request({
-    url:'user/mgt/account/delete/'+id,
-    method:'delete'
+    url: 'user/mgt/account/delete/' + id,
+    method: 'delete'
   })
+}
+
+export function getDetail(id) {
+  return request({
+    url: 'user/mgt/account/' + id + 'detail',
+    method: 'get'
+  });
 }
 

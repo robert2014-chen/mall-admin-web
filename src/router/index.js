@@ -34,7 +34,7 @@ export const constantRouterMap = [
   {
     path: '/user',
     component: Layout,
-    redirect: '/user',
+    redirect: '/user/account',
     name: 'user',
     meta: {title: '账号', icon: 'order'},
     children: [

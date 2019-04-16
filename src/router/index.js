@@ -43,6 +43,13 @@ export const constantRouterMap = [
         name: 'account',
         component: () => import('@/views/user/account/index'),
         meta: {title: '用户列表', icon: 'product-list'}
+      },
+      {
+        path: 'account/detail',
+        name: 'detail',
+        component: () => import('@/views/user/account/detail'),
+        meta: {title: '订单详情'},
+        hidden:true
       }
     ]
   },

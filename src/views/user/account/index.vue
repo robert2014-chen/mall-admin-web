@@ -19,49 +19,49 @@
         </el-button>
       </div>
       <div style="margin-top: 15px">
-        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
+        <el-form :inline="true" :model="queryCriteriaObj" size="small" label-width="140px">
           <el-form-item label="账户编号：">
-            <el-input v-model="listQuery.sn_EQ" class="input-width" placeholder="账户编号（精准匹配）"></el-input>
+            <el-input v-model="queryCriteriaObj.sn_EQ" class="input-width" placeholder="账户编号（精准匹配）"></el-input>
           </el-form-item>
           <el-form-item label="账户昵称：">
-          <el-input v-model="listQuery.nickName_LIKE" class="input-width" placeholder="账户昵称（模糊匹配）"></el-input>
-          <!--</el-form-item>-->
-          <!--<el-form-item label="提交时间：">-->
-          <!--<el-date-picker-->
-          <!--class="input-width"-->
-          <!--v-model="listQuery.createTime"-->
-          <!--value-format="yyyy-MM-dd"-->
-          <!--type="date"-->
-          <!--placeholder="请选择时间">-->
-          <!--</el-date-picker>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="订单状态：">-->
-          <!--<el-select v-model="listQuery.status" class="input-width" placeholder="全部" clearable>-->
-          <!--<el-option v-for="item in statusOptions"-->
-          <!--:key="item.value"-->
-          <!--:label="item.label"-->
-          <!--:value="item.value">-->
-          <!--</el-option>-->
-          <!--</el-select>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="订单分类：">-->
-          <!--<el-select v-model="listQuery.orderType" class="input-width" placeholder="全部" clearable>-->
-          <!--<el-option v-for="item in orderTypeOptions"-->
-          <!--:key="item.value"-->
-          <!--:label="item.label"-->
-          <!--:value="item.value">-->
-          <!--</el-option>-->
-          <!--</el-select>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="订单来源：">-->
-          <!--<el-select v-model="listQuery.sourceType" class="input-width" placeholder="全部" clearable>-->
-          <!--<el-option v-for="item in sourceTypeOptions"-->
-          <!--:key="item.value"-->
-          <!--:label="item.label"-->
-          <!--:value="item.value">-->
-          <!--</el-option>-->
-          <!--</el-select>-->
-          <!--</el-form-item>-->
+            <el-input v-model="queryCriteriaObj.nickName_LIKE" class="input-width" placeholder="账户昵称（模糊匹配）"></el-input>
+            <!--</el-form-item>-->
+            <!--<el-form-item label="提交时间：">-->
+            <!--<el-date-picker-->
+            <!--class="input-width"-->
+            <!--v-model="listQuery.createTime"-->
+            <!--value-format="yyyy-MM-dd"-->
+            <!--type="date"-->
+            <!--placeholder="请选择时间">-->
+            <!--</el-date-picker>-->
+            <!--</el-form-item>-->
+            <el-form-item label="角色列表：">
+              <el-select v-model="queryCriteriaObj.roleSN_IN" class="input-width" placeholder="全部" clearable>
+                <el-option v-for="item in roleData"
+                           :key="item.sn"
+                           :label="item.name"
+                           :value="item.sn">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <!--<el-form-item label="订单分类：">-->
+            <!--<el-select v-model="listQuery.orderType" class="input-width" placeholder="全部" clearable>-->
+            <!--<el-option v-for="item in orderTypeOptions"-->
+            <!--:key="item.value"-->
+            <!--:label="item.label"-->
+            <!--:value="item.value">-->
+            <!--</el-option>-->
+            <!--</el-select>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="订单来源：">-->
+            <!--<el-select v-model="listQuery.sourceType" class="input-width" placeholder="全部" clearable>-->
+            <!--<el-option v-for="item in sourceTypeOptions"-->
+            <!--:key="item.value"-->
+            <!--:label="item.label"-->
+            <!--:value="item.value">-->
+            <!--</el-option>-->
+            <!--</el-select>-->
+          </el-form-item>
         </el-form>
       </div>
     </el-card>
@@ -111,6 +111,7 @@
 </template>
 <script>
   import {fetchList, deleteAccount} from '@/api/account'
+  import {fetchQueryList} from '@/api/role'
   import {formatDate} from '@/utils/date';
 
   const defaultListQuery = {
@@ -126,12 +127,13 @@
         listLoading: true,
         list: null,
         total: null,
-        operateType: null,
-        multipleSelection: []
+        roleData: [],
+        queryCriteriaObj: {}
       }
     },
     created() {
       this.getList();
+      this.initRoleData();
     },
     filters: {
       formatDateTime(time) {
@@ -141,14 +143,15 @@
     },
     methods: {
       handleResetSearch() {
+        this.queryCriteriaObj = {};
         this.listQuery = Object.assign({}, defaultListQuery);
       },
       handleSearchList() {
-        this.listQuery.pageNum = 1;
+        this.listQuery.pageNum = 0;
         this.getList();
       },
       handleDetail(index, row) {
-        this.$router.push({path:"/user/account/detail", query: {id: row.id}})
+        this.$router.push({path: "/user/account/detail", query: {id: row.id}})
       },
       handleDelete(index, row) {
         this.$confirm('是否要进行该删除操作?', '提示', {
@@ -167,8 +170,21 @@
           });
         })
       },
+      initRoleData() {
+        fetchQueryList([]).then(response => {
+          this.roleData = response.body;
+        });
+      },
       getList() {
         this.listLoading = true;
+        let queryCriteria = [];
+        if (this.queryCriteriaObj != {}) {
+          let obj = this.queryCriteriaObj;
+          Object.keys(obj).forEach(function (key) {
+            queryCriteria.push({"propertyName": key, "value": obj[key]});
+          });
+        }
+        this.listQuery['queryCriteria'] = queryCriteria;
         fetchList(this.listQuery).then(response => {
           this.listLoading = false;
           this.list = response.body.list;

@@ -7,6 +7,6 @@ export function fetchList(params) {
     transformRequest: [function (data) {
       return JSON.stringify(data);
     }],
-    params:params
+    data:params
   })
 }

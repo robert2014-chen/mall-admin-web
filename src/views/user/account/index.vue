@@ -24,43 +24,43 @@
             <el-input v-model="listQuery.orderSn" class="input-width" placeholder="订单编号"></el-input>
           </el-form-item>
           <!--<el-form-item label="收货人：">-->
-            <!--<el-input v-model="listQuery.receiverKeyword" class="input-width" placeholder="收货人姓名/手机号码"></el-input>-->
+          <!--<el-input v-model="listQuery.receiverKeyword" class="input-width" placeholder="收货人姓名/手机号码"></el-input>-->
           <!--</el-form-item>-->
           <!--<el-form-item label="提交时间：">-->
-            <!--<el-date-picker-->
-              <!--class="input-width"-->
-              <!--v-model="listQuery.createTime"-->
-              <!--value-format="yyyy-MM-dd"-->
-              <!--type="date"-->
-              <!--placeholder="请选择时间">-->
-            <!--</el-date-picker>-->
+          <!--<el-date-picker-->
+          <!--class="input-width"-->
+          <!--v-model="listQuery.createTime"-->
+          <!--value-format="yyyy-MM-dd"-->
+          <!--type="date"-->
+          <!--placeholder="请选择时间">-->
+          <!--</el-date-picker>-->
           <!--</el-form-item>-->
           <!--<el-form-item label="订单状态：">-->
-            <!--<el-select v-model="listQuery.status" class="input-width" placeholder="全部" clearable>-->
-              <!--<el-option v-for="item in statusOptions"-->
-                         <!--:key="item.value"-->
-                         <!--:label="item.label"-->
-                         <!--:value="item.value">-->
-              <!--</el-option>-->
-            <!--</el-select>-->
+          <!--<el-select v-model="listQuery.status" class="input-width" placeholder="全部" clearable>-->
+          <!--<el-option v-for="item in statusOptions"-->
+          <!--:key="item.value"-->
+          <!--:label="item.label"-->
+          <!--:value="item.value">-->
+          <!--</el-option>-->
+          <!--</el-select>-->
           <!--</el-form-item>-->
           <!--<el-form-item label="订单分类：">-->
-            <!--<el-select v-model="listQuery.orderType" class="input-width" placeholder="全部" clearable>-->
-              <!--<el-option v-for="item in orderTypeOptions"-->
-                         <!--:key="item.value"-->
-                         <!--:label="item.label"-->
-                         <!--:value="item.value">-->
-              <!--</el-option>-->
-            <!--</el-select>-->
+          <!--<el-select v-model="listQuery.orderType" class="input-width" placeholder="全部" clearable>-->
+          <!--<el-option v-for="item in orderTypeOptions"-->
+          <!--:key="item.value"-->
+          <!--:label="item.label"-->
+          <!--:value="item.value">-->
+          <!--</el-option>-->
+          <!--</el-select>-->
           <!--</el-form-item>-->
           <!--<el-form-item label="订单来源：">-->
-            <!--<el-select v-model="listQuery.sourceType" class="input-width" placeholder="全部" clearable>-->
-              <!--<el-option v-for="item in sourceTypeOptions"-->
-                         <!--:key="item.value"-->
-                         <!--:label="item.label"-->
-                         <!--:value="item.value">-->
-              <!--</el-option>-->
-            <!--</el-select>-->
+          <!--<el-select v-model="listQuery.sourceType" class="input-width" placeholder="全部" clearable>-->
+          <!--<el-option v-for="item in sourceTypeOptions"-->
+          <!--:key="item.value"-->
+          <!--:label="item.label"-->
+          <!--:value="item.value">-->
+          <!--</el-option>-->
+          <!--</el-select>-->
           <!--</el-form-item>-->
         </el-form>
       </div>
@@ -76,54 +76,60 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="80" align="center">
+        <el-table-column label="编号" width="180" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <!--<el-table-column label="订单编号" width="180" align="center">-->
-          <!--<template slot-scope="scope">{{scope.row.orderSn}}</template>-->
-        <!--</el-table-column>-->
-        <el-table-column label="提交时间" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.cTime | formatCreateTime}}</template>
+        <el-table-column label="昵称" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.nickName}}</template>
+        </el-table-column>
+        <el-table-column label="注册IP" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.registerIP}}</template>
+        </el-table-column>
+        <el-table-column label="创建时间" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.ctime | formatCreateTime}}</template>
+        </el-table-column>
+        <el-table-column label="最近更新时间" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.utime | formatCreateTime}}</template>
         </el-table-column>
         <!--<el-table-column label="用户账号" align="center">-->
-          <!--<template slot-scope="scope">{{scope.row.memberUsername}}</template>-->
+        <!--<template slot-scope="scope">{{scope.row.memberUsername}}</template>-->
         <!--</el-table-column>-->
         <!--<el-table-column label="订单金额" width="120" align="center">-->
-          <!--<template slot-scope="scope">￥{{scope.row.totalAmount}}</template>-->
+        <!--<template slot-scope="scope">￥{{scope.row.totalAmount}}</template>-->
         <!--</el-table-column>-->
         <!--<el-table-column label="支付方式" width="120" align="center">-->
-          <!--<template slot-scope="scope">{{scope.row.payType | formatPayType}}</template>-->
+        <!--<template slot-scope="scope">{{scope.row.payType | formatPayType}}</template>-->
         <!--</el-table-column>-->
         <!--<el-table-column label="订单来源" width="120" align="center">-->
-          <!--<template slot-scope="scope">{{scope.row.sourceType | formatSourceType}}</template>-->
+        <!--<template slot-scope="scope">{{scope.row.sourceType | formatSourceType}}</template>-->
         <!--</el-table-column>-->
         <!--<el-table-column label="订单状态" width="120" align="center">-->
-          <!--<template slot-scope="scope">{{scope.row.status | formatStatus}}</template>-->
+        <!--<template slot-scope="scope">{{scope.row.status | formatStatus}}</template>-->
         <!--</el-table-column>-->
         <!--<el-table-column label="操作" width="200" align="center">-->
-          <!--<template slot-scope="scope">-->
-            <!--<el-button-->
-              <!--size="mini"-->
-              <!--@click="handleViewOrder(scope.$index, scope.row)"-->
-            <!--&gt;查看订单</el-button>-->
-            <!--<el-button-->
-              <!--size="mini"-->
-              <!--@click="handleCloseOrder(scope.$index, scope.row)"-->
-              <!--v-show="scope.row.status===0">关闭订单</el-button>-->
-            <!--<el-button-->
-              <!--size="mini"-->
-              <!--@click="handleDeliveryOrder(scope.$index, scope.row)"-->
-              <!--v-show="scope.row.status===1">订单发货</el-button>-->
-            <!--<el-button-->
-              <!--size="mini"-->
-              <!--@click="handleViewLogistics(scope.$index, scope.row)"-->
-              <!--v-show="scope.row.status===2||scope.row.status===3">订单跟踪</el-button>-->
-            <!--<el-button-->
-              <!--size="mini"-->
-              <!--type="danger"-->
-              <!--@click="handleDeleteOrder(scope.$index, scope.row)"-->
-              <!--v-show="scope.row.status===4">删除订单</el-button>-->
-          <!--</template>-->
+        <!--<template slot-scope="scope">-->
+        <!--<el-button-->
+        <!--size="mini"-->
+        <!--@click="handleViewOrder(scope.$index, scope.row)"-->
+        <!--&gt;查看订单</el-button>-->
+        <!--<el-button-->
+        <!--size="mini"-->
+        <!--@click="handleCloseOrder(scope.$index, scope.row)"-->
+        <!--v-show="scope.row.status===0">关闭订单</el-button>-->
+        <!--<el-button-->
+        <!--size="mini"-->
+        <!--@click="handleDeliveryOrder(scope.$index, scope.row)"-->
+        <!--v-show="scope.row.status===1">订单发货</el-button>-->
+        <!--<el-button-->
+        <!--size="mini"-->
+        <!--@click="handleViewLogistics(scope.$index, scope.row)"-->
+        <!--v-show="scope.row.status===2||scope.row.status===3">订单跟踪</el-button>-->
+        <!--<el-button-->
+        <!--size="mini"-->
+        <!--type="danger"-->
+        <!--@click="handleDeleteOrder(scope.$index, scope.row)"-->
+        <!--v-show="scope.row.status===4">删除订单</el-button>-->
+        <!--</template>-->
         <!--</el-table-column>-->
       </el-table>
     </div>
@@ -132,10 +138,11 @@
 <script>
   import {fetchList} from '@/api/account'
   import {formatDate} from '@/utils/date';
+
   const defaultListQuery = {
-    startRow: 1,
+    startRow: 0,
     pageSize: 10,
-    queryCriteria:[]
+    queryCriteria: []
   };
   export default {
     name: "fetchList",

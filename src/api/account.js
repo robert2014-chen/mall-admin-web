@@ -10,3 +10,11 @@ export function fetchList(params) {
     data:params
   })
 }
+
+export function deleteAccount(id) {
+  return request({
+    url:'user/mgt/account/delete/'+id,
+    method:'delete'
+  })
+}
+

@@ -110,7 +110,7 @@
   </div>
 </template>
 <script>
-  import {fetchList} from '@/api/account'
+  import {fetchList,deleteAccount} from '@/api/account'
   import {formatDate} from '@/utils/date';
 
   const defaultListQuery = {
@@ -149,7 +149,21 @@
       },
       handleDetail(index,row){},
       handleDelete(index,row){
-
+        this.$confirm('是否要进行该删除操作?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          let params = new URLSearchParams();
+          deleteAccount(row.id).then(response=>{
+            this.$message({
+              message: '删除成功！',
+              type: 'success',
+              duration: 1000
+            });
+            this.getList();
+          });
+        })
       },
       getList() {
         this.listLoading = true;

@@ -147,7 +147,10 @@
         this.listQuery.pageNum = 1;
         this.getList();
       },
-      handleDetail(){},
+      handleDetail(index,row){},
+      handleDelete(index,row){
+
+      },
       getList() {
         this.listLoading = true;
         fetchList(this.listQuery).then(response => {

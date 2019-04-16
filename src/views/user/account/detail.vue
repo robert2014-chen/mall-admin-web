@@ -11,7 +11,7 @@
         <el-row>
           <el-col :span="4" class="table-cell-title">编号</el-col>
           <el-col :span="4" class="table-cell-title">昵称</el-col>
-          <el-col :span="4" class="table-cell-title">出生日期</el-col>
+          <el-col :span="4" class="table-cell-title"></el-col>
           <el-col :span="4" class="table-cell-title"></el-col>
           <el-col :span="4" class="table-cell-title"></el-col>
           <el-col :span="4" class="table-cell-title"></el-col>
@@ -19,7 +19,7 @@
         <el-row>
           <el-col :span="4" class="table-cell">{{account.sn}}</el-col>
           <el-col :span="4" class="table-cell">{{account.nickName}}</el-col>
-          <el-col :span="4" class="table-cell">{{order.birthday | formatDateTime }}</el-col>
+          <el-col :span="4" class="table-cell"></el-col>
           <el-col :span="4" class="table-cell"></el-col>
           <el-col :span="4" class="table-cell"></el-col>
           <el-col :span="4" class="table-cell"></el-col>
@@ -33,7 +33,7 @@
   import VDistpicker from 'v-distpicker';
 
   export default {
-    name: 'orderDetail',
+    name: 'detail',
     components: {VDistpicker},
     data() {
       return {
@@ -43,12 +43,12 @@
     },
     created() {
       this.id = this.list = this.$route.query.id;
-      getOrderDetail(this.id).then(response => {
+      getDetail(this.id).then(response => {
         this.account = response.data;
       });
     },
     filters: {
-      formatDateTime(time){
+      formatDateTime(time) {
         if (time == null || time === '') {
           return '';
         }
@@ -56,8 +56,7 @@
         return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
       }
     },
-    methods: {
-    }
+    methods: {}
   }
 </script>
 <style scoped>

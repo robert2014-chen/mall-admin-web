@@ -148,7 +148,7 @@
         this.getList();
       },
       handleDetail(index, row) {
-        this.$router.push("/user/account/detail", {query: {id: row.id}})
+        this.$router.push({path:"/user/account/detail", query: {id: row.id}})
       },
       handleDelete(index, row) {
         this.$confirm('是否要进行该删除操作?', '提示', {

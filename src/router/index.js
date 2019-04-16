@@ -20,19 +20,29 @@ import Layout from '../views/layout/Layout'
  **/
 export const constantRouterMap = [
   {path: '/404', component: () => import('@/views/404'), hidden: true},
-  {path: '/', component: () => import('@/views/home/index')},
+  {
+    path: '',
+    component: Layout,
+    redirect: '/home',
+    children: [{
+      path: 'home',
+      name: 'home',
+      component: () => import('@/views/home/index'),
+      meta: {title: '首页', icon: 'home'}
+    }]
+  },
   {
     path: '/user',
     component: Layout,
-    redirect: '/user/account',
+    redirect: '/user',
     name: 'user',
     meta: {title: '账号', icon: 'order'},
     children: [
       {
-        path: 'order',
-        name: 'order',
+        path: 'account',
+        name: 'account',
         component: () => import('@/views/user/account/index'),
-        meta: {title: '订单列表', icon: 'product-list'}
+        meta: {title: '用户列表', icon: 'product-list'}
       }
     ]
   },

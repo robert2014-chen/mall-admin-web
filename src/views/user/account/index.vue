@@ -18,11 +18,11 @@
           重置
         </el-button>
       </div>
-      <!--<div style="margin-top: 15px">-->
-        <!--<el-form :inline="true" :model="listQuery" size="small" label-width="140px">-->
-          <!--<el-form-item label="输入搜索：">-->
-            <!--<el-input v-model="listQuery.orderSn" class="input-width" placeholder="订单编号"></el-input>-->
-          <!--</el-form-item>-->
+      <div style="margin-top: 15px">
+        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
+          <el-form-item label="输入搜索：">
+            <el-input v-model="listQuery.orderSn" class="input-width" placeholder="订单编号"></el-input>
+          </el-form-item>
           <!--<el-form-item label="收货人：">-->
             <!--<el-input v-model="listQuery.receiverKeyword" class="input-width" placeholder="收货人姓名/手机号码"></el-input>-->
           <!--</el-form-item>-->
@@ -62,8 +62,8 @@
               <!--</el-option>-->
             <!--</el-select>-->
           <!--</el-form-item>-->
-        <!--</el-form>-->
-      <!--</div>-->
+        </el-form>
+      </div>
     </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
@@ -75,16 +75,16 @@
                 style="width: 100%;"
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
-        <!--<el-table-column type="selection" width="60" align="center"></el-table-column>-->
-        <!--<el-table-column label="编号" width="80" align="center">-->
-          <!--<template slot-scope="scope">{{scope.row.id}}</template>-->
-        <!--</el-table-column>-->
+        <el-table-column type="selection" width="60" align="center"></el-table-column>
+        <el-table-column label="编号" width="80" align="center">
+          <template slot-scope="scope">{{scope.row.id}}</template>
+        </el-table-column>
         <!--<el-table-column label="订单编号" width="180" align="center">-->
           <!--<template slot-scope="scope">{{scope.row.orderSn}}</template>-->
         <!--</el-table-column>-->
-        <!--<el-table-column label="提交时间" width="180" align="center">-->
-          <!--<template slot-scope="scope">{{scope.row.createTime | formatCreateTime}}</template>-->
-        <!--</el-table-column>-->
+        <el-table-column label="提交时间" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.cTime | formatCreateTime}}</template>
+        </el-table-column>
         <!--<el-table-column label="用户账号" align="center">-->
           <!--<template slot-scope="scope">{{scope.row.memberUsername}}</template>-->
         <!--</el-table-column>-->
@@ -130,20 +130,15 @@
   </div>
 </template>
 <script>
-  import {fetchList,closeOrder,deleteOrder} from '@/api/account'
+  import {fetchList} from '@/api/account'
   import {formatDate} from '@/utils/date';
   const defaultListQuery = {
-    pageNum: 1,
+    startRow: 1,
     pageSize: 10,
-    orderSn: null,
-    receiverKeyword: null,
-    status: null,
-    orderType: null,
-    sourceType: null,
-    createTime: null,
+    queryCriteria:[]
   };
   export default {
-    name: "orderList",
+    name: "fetchList",
     data() {
       return {
         listQuery: Object.assign({}, defaultListQuery),

@@ -91,46 +91,20 @@
         <el-table-column label="最近更新时间" width="180" align="center">
           <template slot-scope="scope">{{scope.row.utime | formatDateTime}}</template>
         </el-table-column>
-        <!--<el-table-column label="用户账号" align="center">-->
-        <!--<template slot-scope="scope">{{scope.row.memberUsername}}</template>-->
-        <!--</el-table-column>-->
-        <!--<el-table-column label="订单金额" width="120" align="center">-->
-        <!--<template slot-scope="scope">￥{{scope.row.totalAmount}}</template>-->
-        <!--</el-table-column>-->
-        <!--<el-table-column label="支付方式" width="120" align="center">-->
-        <!--<template slot-scope="scope">{{scope.row.payType | formatPayType}}</template>-->
-        <!--</el-table-column>-->
-        <!--<el-table-column label="订单来源" width="120" align="center">-->
-        <!--<template slot-scope="scope">{{scope.row.sourceType | formatSourceType}}</template>-->
-        <!--</el-table-column>-->
-        <!--<el-table-column label="订单状态" width="120" align="center">-->
-        <!--<template slot-scope="scope">{{scope.row.status | formatStatus}}</template>-->
-        <!--</el-table-column>-->
-        <!--<el-table-column label="操作" width="200" align="center">-->
-        <!--<template slot-scope="scope">-->
-        <!--<el-button-->
-        <!--size="mini"-->
-        <!--@click="handleViewOrder(scope.$index, scope.row)"-->
-        <!--&gt;查看订单</el-button>-->
-        <!--<el-button-->
-        <!--size="mini"-->
-        <!--@click="handleCloseOrder(scope.$index, scope.row)"-->
-        <!--v-show="scope.row.status===0">关闭订单</el-button>-->
-        <!--<el-button-->
-        <!--size="mini"-->
-        <!--@click="handleDeliveryOrder(scope.$index, scope.row)"-->
-        <!--v-show="scope.row.status===1">订单发货</el-button>-->
-        <!--<el-button-->
-        <!--size="mini"-->
-        <!--@click="handleViewLogistics(scope.$index, scope.row)"-->
-        <!--v-show="scope.row.status===2||scope.row.status===3">订单跟踪</el-button>-->
-        <!--<el-button-->
-        <!--size="mini"-->
-        <!--type="danger"-->
-        <!--@click="handleDeleteOrder(scope.$index, scope.row)"-->
-        <!--v-show="scope.row.status===4">删除订单</el-button>-->
-        <!--</template>-->
-        <!--</el-table-column>-->
+        <el-table-column label="操作" width="200" align="center">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              @click="handleDetail(scope.$index, scope.row)"
+            >查看详情
+            </el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table>
     </div>
   </div>
@@ -173,6 +147,7 @@
         this.listQuery.pageNum = 1;
         this.getList();
       },
+      handleDetail(){},
       getList() {
         this.listLoading = true;
         fetchList(this.listQuery).then(response => {

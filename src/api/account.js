@@ -21,7 +21,7 @@ export function deleteAccount(id) {
 
 export function getDetail(id) {
   return request({
-    url: 'user/mgt/account/' + id + 'detail',
+    url: 'user/mgt/account/' + id + '/detail',
     method: 'get'
   });
 }

@@ -44,7 +44,7 @@
     created() {
       this.id = this.list = this.$route.query.id;
       getDetail(this.id).then(response => {
-        this.account = response.data;
+        this.account = response.body;
       });
     },
     filters: {

@@ -3,26 +3,19 @@
     <el-card shadow="never" style="margin-top: 15px">
       <div class="operate-container">
       </div>
-      <div style="margin-top: 20px">
+      <div style="margin-top: 20px;border-bottom:1px solid #ebeef5;padding-bottom:5px;">
         <svg-icon icon-class="marker" style="color: #606266"></svg-icon>
         <span class="font-small">基本信息</span>
       </div>
       <div class="table-layout">
         <el-row>
           <el-col :span="4" class="table-cell-title">编号</el-col>
+          <el-col :span="4" class="table-cell">{{account.sn}}</el-col>
           <el-col :span="4" class="table-cell-title">昵称</el-col>
-          <el-col :span="4" class="table-cell-title"></el-col>
-          <el-col :span="4" class="table-cell-title"></el-col>
-          <el-col :span="4" class="table-cell-title"></el-col>
-          <el-col :span="4" class="table-cell-title"></el-col>
+          <el-col :span="4" class="table-cell">{{account.nickName}}</el-col>
         </el-row>
         <el-row>
-          <el-col :span="4" class="table-cell">{{account.sn}}</el-col>
-          <el-col :span="4" class="table-cell">{{account.nickName}}</el-col>
-          <el-col :span="4" class="table-cell"></el-col>
-          <el-col :span="4" class="table-cell"></el-col>
-          <el-col :span="4" class="table-cell"></el-col>
-          <el-col :span="4" class="table-cell"></el-col>
+
         </el-row>
       </div>
     </el-card>
@@ -80,15 +73,17 @@
 
   .table-layout {
     margin-top: 20px;
-    border-left: 1px solid #DCDFE6;
-    border-top: 1px solid #DCDFE6;
+    /*border-left: 1px solid #DCDFE6;*/
+    /*border-top: 1px solid #DCDFE6;*/
+  }
+
+  .el-row{
+    height: 60px;
+    line-height: 40px;
   }
 
   .table-cell {
-    height: 60px;
-    line-height: 40px;
-    border-right: 1px solid #DCDFE6;
-    border-bottom: 1px solid #DCDFE6;
+    border: 1px solid #DCDFE6;
     padding: 10px;
     font-size: 14px;
     color: #606266;
@@ -97,8 +92,7 @@
   }
 
   .table-cell-title {
-    border-right: 1px solid #DCDFE6;
-    border-bottom: 1px solid #DCDFE6;
+    border: 1px solid #DCDFE6;
     padding: 10px;
     background: #F2F6FC;
     text-align: center;

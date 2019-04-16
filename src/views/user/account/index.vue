@@ -165,6 +165,14 @@
       handleSearchList() {
         this.listQuery.pageNum = 1;
         this.getList();
+      },
+      getList() {
+        this.listLoading = true;
+        fetchList(this.listQuery).then(response => {
+          this.listLoading = false;
+          this.list = response.body.list;
+          this.total = response.body.total;
+        });
       }
     }
   }

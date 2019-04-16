@@ -86,10 +86,10 @@
           <template slot-scope="scope">{{scope.row.registerIP}}</template>
         </el-table-column>
         <el-table-column label="创建时间" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.ctime | formatCreateTime}}</template>
+          <template slot-scope="scope">{{scope.row.ctime | formatDateTime}}</template>
         </el-table-column>
         <el-table-column label="最近更新时间" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.utime | formatCreateTime}}</template>
+          <template slot-scope="scope">{{scope.row.utime | formatDateTime}}</template>
         </el-table-column>
         <!--<el-table-column label="用户账号" align="center">-->
         <!--<template slot-scope="scope">{{scope.row.memberUsername}}</template>-->
@@ -160,7 +160,7 @@
       this.getList();
     },
     filters: {
-      formatCreateTime(time) {
+      formatDateTime(time) {
         let date = new Date(time);
         return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
       }

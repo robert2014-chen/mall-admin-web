@@ -9,10 +9,10 @@
       </div>
       <div class="table-layout">
         <el-row>
-          <el-col :span="4" class="table-cell-title">编号</el-col>
-          <el-col :span="4" class="table-cell">{{account.sn}}</el-col>
+          <el-col :span="4" class="table-cell-title"></el-col>
+          <el-col :span="4" class="table-cell"></el-col>
           <el-col :span="4" class="table-cell-title">昵称</el-col>
-          <el-col :span="4" class="table-cell">{{account.nickName}}</el-col>
+          <el-col :span="4" class="table-cell"></el-col>
         </el-row>
       </div>
     </el-card>

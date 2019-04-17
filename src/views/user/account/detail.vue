@@ -2,8 +2,8 @@
   <el-steps :active="active" finishStatus="success" alignCenter="center">
     <el-step title="账号基本信息"></el-step>
     <el-step title="个人基本信息"></el-step>
-    <el-step title="个人联系信息"></el-step>
-    <el-step title="个人认证信息"></el-step>
+    <!--<el-step title="个人联系信息"></el-step>-->
+    <!--<el-step title="个人认证信息"></el-step>-->
   </el-steps>
   <div class="detail-container" v-show="showStatus[0]">
     <el-card shadow="never" style="margin-top: 15px">
@@ -26,6 +26,7 @@
   <person-info-detail v-show="showStatus[0]" v-model="person" @nextStep="nextStep"></person-info-detail>
 </template>
 <script>
+  import PersonInfoDetail from './PersonInfoDetail';
   import {getDetail} from '@/api/account';
   import VDistpicker from 'v-distpicker';
   import ElStep from "../../../../node_modules/element-ui/packages/steps/src/step.vue";
@@ -33,8 +34,10 @@
   export default {
     name: 'detail',
     components: {
+      PersonInfoDetail,
       ElStep,
-      VDistpicker},
+      VDistpicker
+    },
     data() {
       return {
         id: null,
@@ -84,7 +87,7 @@
     /*border-top: 1px solid #DCDFE6;*/
   }
 
-  .el-row{
+  .el-row {
     height: 60px;
     line-height: 40px;
   }

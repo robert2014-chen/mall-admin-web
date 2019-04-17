@@ -26,7 +26,7 @@
   <person-info-detail v-show="showStatus[0]" v-model="person" @nextStep="nextStep"></person-info-detail>
 </template>
 <script>
-  import PersonInfoDetail from './PersonInfoDetail';
+  import PersonInfoDetail from './compotents/PersonInfoDetail';
   import {getDetail} from '@/api/account';
   import VDistpicker from 'v-distpicker';
   import ElStep from "../../../../node_modules/element-ui/packages/steps/src/step.vue";

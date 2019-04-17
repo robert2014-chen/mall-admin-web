@@ -1,5 +1,11 @@
 <template> 
-  <div class="detail-container">
+  <el-steps :active="active" finishStatus="success" alignCenter="center">
+    <el-step title="账号基本信息"></el-step>
+    <el-step title="个人基本信息"></el-step>
+    <el-step title="个人联系信息"></el-step>
+    <el-step title="个人认证信息"></el-step>
+  </el-steps>
+  <div class="detail-container" v-show="showStatus[0]">
     <el-card shadow="never" style="margin-top: 15px">
       <div class="operate-container">
       </div>
@@ -14,20 +20,21 @@
           <el-col :span="4" class="table-cell-title">昵称</el-col>
           <el-col :span="4" class="table-cell">{{account.nickName}}</el-col>
         </el-row>
-        <el-row>
-
-        </el-row>
       </div>
     </el-card>
   </div>
+  <person-info-detail v-show="showStatus[0]" v-model="person" @nextStep="nextStep"></person-info-detail>
 </template>
 <script>
   import {getDetail} from '@/api/account';
   import VDistpicker from 'v-distpicker';
+  import ElStep from "../../../../node_modules/element-ui/packages/steps/src/step.vue";
 
   export default {
     name: 'detail',
-    components: {VDistpicker},
+    components: {
+      ElStep,
+      VDistpicker},
     data() {
       return {
         id: null,

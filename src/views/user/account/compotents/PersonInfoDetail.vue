@@ -1,8 +1,6 @@
 <template> 
-  <div class="detail-container" v-show="showStatus[0]">
-    <el-card shadow="never" style="margin-top: 15px">
-      <div class="operate-container">
-      </div>
+  <div>
+    <div class="detail-container" v-show="showStatus[1]">
       <div style="margin-top: 20px;border-bottom:1px solid #ebeef5;padding-bottom:5px;">
         <svg-icon icon-class="marker" style="color: #606266"></svg-icon>
         <span class="font-small">基本信息</span>
@@ -15,6 +13,6 @@
           <el-col :span="4" class="table-cell"></el-col>
         </el-row>
       </div>
-    </el-card>
+    </div>
   </div>
 </template>

@@ -1,14 +1,12 @@
 <template> 
-  <el-steps :active="active" finishStatus="success" alignCenter="center">
-    <el-step title="账号基本信息"></el-step>
-    <el-step title="个人基本信息"></el-step>
-    <!--<el-step title="个人联系信息"></el-step>-->
-    <!--<el-step title="个人认证信息"></el-step>-->
-  </el-steps>
-  <div class="detail-container" v-show="showStatus[0]">
-    <el-card shadow="never" style="margin-top: 15px">
-      <div class="operate-container">
-      </div>
+  <el-card>
+    <el-steps :active="active" finishStatus="success" alignCenter="center">
+      <el-step title="账号基本信息"></el-step>
+      <el-step title="个人基本信息"></el-step>
+      <!--<el-step title="个人联系信息"></el-step>-->
+      <!--<el-step title="个人认证信息"></el-step>-->
+    </el-steps>
+    <div class="detail-container">
       <div style="margin-top: 20px;border-bottom:1px solid #ebeef5;padding-bottom:5px;">
         <svg-icon icon-class="marker" style="color: #606266"></svg-icon>
         <span class="font-small">基本信息</span>
@@ -21,19 +19,21 @@
           <el-col :span="4" class="table-cell">{{account.nickName}}</el-col>
         </el-row>
       </div>
-    </el-card>
-  </div>
-  <person-info-detail v-show="showStatus[0]" v-model="person" @nextStep="nextStep"></person-info-detail>
+    </div>
+    <!--<person-info-detail v-show="showStatus[0]" v-model="person" @nextStep="nextStep"></person-info-detail>-->
+  </el-card>
 </template>
 <script>
   import PersonInfoDetail from './compotents/PersonInfoDetail';
   import {getDetail} from '@/api/account';
   import VDistpicker from 'v-distpicker';
   import ElStep from "../../../../node_modules/element-ui/packages/steps/src/step.vue";
+  import ElCard from "../../../../node_modules/element-ui/packages/card/src/main.vue";
 
   export default {
     name: 'detail',
     components: {
+      ElCard,
       PersonInfoDetail,
       ElStep,
       VDistpicker

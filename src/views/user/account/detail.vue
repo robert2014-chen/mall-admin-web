@@ -1,12 +1,12 @@
 <template> 
   <el-card>
-    <el-steps :active="active" finishStatus="success" alignCenter="center">
+    <el-steps :active="active" finishStatus="success" align-center>
       <el-step title="账号基本信息"></el-step>
       <el-step title="个人基本信息"></el-step>
       <!--<el-step title="个人联系信息"></el-step>-->
       <!--<el-step title="个人认证信息"></el-step>-->
     </el-steps>
-    <div class="detail-container">
+    <div class="detail-container" v-show="showStatus[0]" @nextStep="nextStep" >
       <div style="margin-top: 20px;border-bottom:1px solid #ebeef5;padding-bottom:5px;">
         <svg-icon icon-class="marker" style="color: #606266"></svg-icon>
         <span class="font-small">基本信息</span>
@@ -20,7 +20,7 @@
         </el-row>
       </div>
     </div>
-    <!--<person-info-detail v-show="showStatus[0]" v-model="person" @nextStep="nextStep"></person-info-detail>-->
+    <person-info-detail v-show="showStatus[1]" v-model="person" @prevStep="prevStep"></person-info-detail>
   </el-card>
 </template>
 <script>
@@ -42,6 +42,8 @@
       return {
         id: null,
         account: {},
+        active:0,
+        showStatus:[true,false]
       }
     },
     created() {
@@ -59,7 +61,27 @@
         return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
       }
     },
-    methods: {}
+    methods: {
+      hideAll(){
+        for (let i=0;i<this.showStatus.length;i++){
+          this.showStatus[i]=false;
+        }
+      },
+      prevStep(){
+        if(this.active>0 && this.active < this.showStatus.length){
+          this.active--;
+          this.hideAll();
+          this.showStatus[this.active]=true;
+        }
+      },
+      nextStep(){
+        if(this.active<this.showStatus.length){
+          this.active++;
+          this.hideAll();
+          this.showStatus[this.active]=true;
+        }
+      }
+    }
   }
 </script>
 <style scoped>

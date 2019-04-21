@@ -30,7 +30,7 @@
           </el-form-item>
 
           <el-form-item label="角色列表：">
-            <el-select v-model="queryCriteriaObj.roleSN_IN" class="input-width" placeholder="全部" clearable>
+            <el-select v-model="queryCriteriaObj.O_roleSN_IN" class="input-width" placeholder="全部" clearable>
               <el-option v-for="item in roleData"
                          :key="item.sn"
                          :label="item.name"

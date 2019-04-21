@@ -10,9 +10,30 @@
           <el-col :span="4" class="table-cell-title"></el-col>
           <el-col :span="4" class="table-cell"></el-col>
           <el-col :span="4" class="table-cell-title">姓名</el-col>
-          <el-col :span="4" class="table-cell"></el-col>
+          <el-col :span="4" class="table-cell">{{person.name}}</el-col>
         </el-row>
       </div>
     </div>
   </div>
 </template>
+<script>
+
+  import {getPersonByAccountSN} from '@/api/person';
+
+  export default {
+    name: 'PersonInfoDetail',
+    data() {
+      return {
+        id: null,
+        person: {}
+      }
+    },
+    props:['accountSN'],
+    created() {
+      getPersonByAccountSN(accountSN).then(response => {
+        this.person = response.body;
+      });
+    }
+  }
+
+</script>

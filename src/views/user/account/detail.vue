@@ -6,6 +6,7 @@
       <!--<el-step title="个人联系信息"></el-step>-->
       <!--<el-step title="个人认证信息"></el-step>-->
     </el-steps>
+    <el-button style="margin-top: 12px;" @click="nextStep">下一步</el-button>
     <div class="detail-container" v-show="showStatus[0]" @nextStep="nextStep" >
       <div style="margin-top: 20px;border-bottom:1px solid #ebeef5;padding-bottom:5px;">
         <svg-icon icon-class="marker" style="color: #606266"></svg-icon>
@@ -20,7 +21,7 @@
         </el-row>
       </div>
     </div>
-    <person-info-detail v-show="showStatus[1]" v-model="person" @prevStep="prevStep"></person-info-detail>
+    <person-info-detail v-show="showStatus[1]" v-model="person" :accountSN="acount.sn" @prevStep="prevStep"></person-info-detail>
   </el-card>
 </template>
 <script>

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
-import store from '../store'
+import store from '../sys'
 import { getToken } from '@/utils/auth'
 
 // 创建axios实例
@@ -10,17 +10,18 @@ const service = axios.create({
   timeout: 15000 // 请求超时时间
 })
 
-// // request拦截器
-// service.interceptors.request.use(config => {
-//   if (store.getters.token) {
-//     config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
-//   }
-//   return config
-// }, error => {
-//   // Do something with request error
-//   console.log(error) // for debug
-//   Promise.reject(error)
-// })
+// request拦截器
+service.interceptors.request.use(config => {
+  // if (sys.getters.token) {
+    config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    // config.headers['Authorization'] = '1a981cba-f750-43f9-8990-9bce3f26fdde' // 让每个请求携带自定义token 请根据实际情况自行修改
+  // }
+  return config
+}, error => {
+  // Do something with request error
+  console.log(error) // for debug
+  Promise.reject(error)
+})
 
 // respone拦截器
 service.interceptors.response.use(
@@ -31,7 +32,7 @@ service.interceptors.response.use(
     const res = response.data
     if (res.header.retStatus !== 'success') {
       Message({
-        message: res.header.msg,
+        message: res.header.msg.length<10?res.header.msg:res.header.msg.substring(0,10),
         type: 'error',
         duration: 3 * 1000
       })
@@ -43,7 +44,7 @@ service.interceptors.response.use(
       //     cancelButtonText: '取消',
       //     type: 'warning'
       //   }).then(() => {
-      //     store.dispatch('FedLogOut').then(() => {
+      //     sys.dispatch('FedLogOut').then(() => {
       //       location.reload()// 为了重新实例化vue-router对象 避免bug
       //     })
       //   })

@@ -110,56 +110,54 @@
       <div class="divs-body">
         <div class="obj-row" v-for="item in list">
           <div class="obj-cell">
-            <div>
-              <div>
-                <span>编码</span>
-              </div>
-              <div>
-                <span>{{item.sn}}</span>
-              </div>
+            <div class="obj-cell-label">
+              <span>编码</span>
+            </div>
+            <div class="obj-cell-value">
+              <span>{{item.sn}}</span>
             </div>
           </div>
           <div class="obj-cell">
-            <div>
-              <div>
-                <span>昵称</span>
-              </div>
-              <div>
-                <span>{{item.nickName}}</span>
-              </div>
+            <div class="obj-cell-label">
+              <span>昵称</span>
+            </div>
+            <div class="obj-cell-value">
+              <span>{{item.nickName}}</span>
             </div>
           </div>
           <div class="obj-cell">
-            <div>
-              <div>
-                <span>注册IP</span>
-              </div>
-              <div>
-                <span>{{item.registerIP}}</span>
-              </div>
+            <div class="obj-cell-label">
+              <span>注册IP</span>
+            </div>
+            <div class="obj-cell-value">
+              <span>{{item.registerIP}}</span>
             </div>
           </div>
           <div class="obj-cell">
-            <div>
-              <div>
-                <span>图片</span>
-              </div>
-              <div>
-                <span>1231231</span>
-              </div>
+            <div class="obj-cell-label">
+              <span>图片</span>
+            </div>
+            <div class="obj-cell-value">
+              <span>{{item.avatar}}</span>
             </div>
           </div>
-          <div class="obj-cell operate-cell">
-            <el-button
-              size="mini"
-              @click="handleDetail(1, item)"
-            >查看详情
-            </el-button>
-            <el-button
-              size="mini"
-              type="danger"
-              @click="handleDelete(1, item)">删除
-            </el-button>
+          <div class="obj-cell">
+            <div class="obj-cell-label">
+              <span>操作</span>
+            </div>
+            <div class="obj-cell-value">
+              <!--<div class="operate-cell"-->
+              <!--@click="handleDetail(1, item)"-->
+              <!--&gt;-->
+              <span>查看详情</span>
+              <!--</div>-->
+              <!--<div class="operate-cell"-->
+              <!--size="mini"-->
+              <!--type="danger"-->
+              <!--@click="handleDelete(1, item)">-->
+              <span>删除</span>
+            </div>
+            <!--</div>-->
           </div>
         </div>
       </div>
@@ -177,7 +175,8 @@
   const defaultListQuery = {
     startRow: 0,
     pageSize: 10,
-    queryCriteria: []
+    queryCriteria: [],
+    queryOrders: [{"propertyName": "ctime", "sort": false}]
   };
   export default {
     name: "fetchList",
@@ -193,7 +192,7 @@
     },
     created() {
       this.getList();
-      this.initRoleData();
+//      this.initRoleData();
     },
     filters: {
       formatDateTime(time) {
@@ -211,7 +210,7 @@
         this.getList();
       },
       handleDetail(index, row) {
-        this.$router.push({path: "/user/account/detail", query: {id: row.id}})
+//        this.$router.push({path: "/user/account/detail", query: {id: row.id}})
       },
       handleDelete(index, row) {
         this.$confirm('是否要进行该删除操作?', '提示', {
@@ -219,15 +218,15 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let params = new URLSearchParams();
-          deleteAccount(row.id).then(response => {
-            this.$message({
-              message: '删除成功！',
-              type: 'success',
-              duration: 1000
-            });
-            this.getList();
-          });
+//          let params = new URLSearchParams();
+//          deleteAccount(row.id).then(response => {
+//            this.$message({
+//              message: '删除成功！',
+//              type: 'success',
+//              duration: 1000
+//            });
+//            this.getList();
+//          });
         })
       },
       initRoleData() {
@@ -264,95 +263,116 @@
     margin-top: 10px;
   }
 
-  .divs-container .divs-body {
+  @media screen and (min-width: 800px) {
+
+    .divs-container .divs-body .obj-row > div {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .divs-container .divs-body .obj-row .obj-cell {
+      display: inline-block;
+      vertical-align: middle;
+      border-right: 1px solid #d8e4f1;
+      border-bottom: 1px solid #d8e4f1;
+    }
+
+    .divs-container .divs-body .obj-row .obj-cell .obj-cell-label {
+      display: none;
+    }
+
+    .divs-container .divs-body .obj-row .obj-cell .obj-cell-value {
+      min-width: 100px;
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      /*padding:0 10px;*/
+    }
+
+    .divs-container .divs-body .obj-row .obj-cell:nth-child(1) .obj-cell-label {
+      border-left: 1px solid #d8e4f1;
+    }
+
+    .divs-container .divs-body .obj-row .obj-cell:nth-child(1) .obj-cell-value {
+      border-left: 1px solid #d8e4f1;
+    }
+
+    .divs-container .divs-body .obj-row:nth-child(1) .obj-cell .obj-cell-label {
+      /*padding:0 10px;*/
+      height: 30px;
+      line-height: 30px;
+      min-width: 100px;
+      width: 100%;
+      display: block;
+      text-align: center;
+      border-bottom: 1px solid #d8e4f1;
+      border-top: 1px solid #d8e4f1;
+    }
+
   }
 
   @media screen and (max-device-width: 400px) {
+
     .divs-container .divs-body .obj-row {
       border: 1px solid #d8e4f1;
-      height: 91px;
     }
 
     .divs-container .divs-body .obj-row .obj-cell {
       border-bottom: 1px solid #d8e4f1;
       border-right: 1px solid #d8e4f1;
-      width: 69%;
+      height: 37px;
     }
 
-    .divs-container .divs-body .obj-row .obj-cell:nth-last-child(2) {
-      border: none;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell:nth-last-child(3) {
-      border-bottom: none;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell * {
-      display: block;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell:nth-last-child(2) {
-      position: relative;
-      right: -69%;
-      top: -87px;
-      width: 29%;
-      height: 87px;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell > div > div:nth-child(1) {
-      border-right: 1px solid #d8e4f1;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell:nth-last-child(2) > div > div:nth-child(1) {
-      display: none;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell:nth-last-child(1) {
-      width: 100%;
-      height: 39px;
-      position: relative;
-      top: -86px;
-      align-items: center;
-      padding-top: 7px;
-      padding-left: 17px;
+    .divs-container .divs-body .obj-row .obj-cell:nth-child(1) {
       border-left: 1px solid #d8e4f1;
     }
 
-    .divs-container .divs-body .obj-row .obj-cell > div > div {
+    .divs-container .divs-body .obj-row .obj-cell > div:nth-child(1) {
+      border-right: 1px solid #d8e4f1;
+    }
+
+    .divs-container .divs-body .obj-row .obj-cell:nth-last-child(1) {
+      /*width: 100%;*/
+      /*height: 39px;*/
+      /*position: relative;*/
+      /*top: -86px;*/
+      /*align-items: center;*/
+      /*padding-top: 7px;*/
+      /*padding-left: 17px;*/
+      /*border-left: 1px solid #d8e4f1;*/
+    }
+
+    .divs-container .divs-body .obj-row .obj-cell > div {
       text-align: center;
       font-weight: 500;
       font-size: 14px;
       display: inline-block;
       vertical-align: middle;
-      height: 29px;
-      line-height: 27px;
-      width: 69%;
     }
 
-    .divs-container .divs-body .obj-row .obj-cell > div > div:nth-child(1) {
+    .divs-container .divs-body .obj-row .obj-cell .obj-cell-label {
       width: 29%;
     }
 
-    .divs-container .divs-body .obj-row .obj-cell > div > div span {
-      line-height: 27px;
+    .divs-container .divs-body .obj-row .obj-cell > div span {
+      line-height: 37px;
       vertical-align: middle;
       text-align: center;
       padding-left: 7px;
     }
 
-    .divs-container .divs-body .obj-row .obj-cell > div > div:nth-child(1) span {
+    .divs-container .divs-body .obj-row .obj-cell > div {
       text-align: left;
     }
 
-    .divs-container .divs-body .obj-row .obj-cell {
-      /*height: 18px;*/
-      /*width:200px;*/
+    .divs-container .divs-body .obj-row .obj-cell .obj-cell-value {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      -o-text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: 69%;
     }
 
-    .divs-container .divs-body .obj-row .operate-cell > * {
-      display: inline-block;
-      vertical-align: middle;
-    }
   }
 
 

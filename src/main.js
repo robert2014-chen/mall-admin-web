@@ -11,10 +11,10 @@ import '@/styles/index.scss' // global css
 
 import App from './App'
 import router from './router'
-import store from './store'
+import sys from './sys'
 
 import '@/icons' // icon
-// import '@/permission' // permission control
+import '@/permission' // permission control
 
 Vue.use(ElementUI, { locale })
 Vue.use(VCharts)
@@ -24,7 +24,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  store,
+  store: sys,
   template: '<App/>',
   components: { App }
 })

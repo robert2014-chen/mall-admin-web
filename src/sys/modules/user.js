@@ -1,4 +1,6 @@
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import {getToken, setToken, removeToken} from '@/utils/auth'
+import {login} from "@/api/login";
+
 
 const user = {
   state: {
@@ -25,12 +27,13 @@ const user = {
 
   actions: {
     // 登录
-    Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
+    Login({commit}, userInfo) {
+      const account = userInfo.account.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
-          const data = response.data
-          const tokenStr = data.tokenHead+data.token
+        login(account, userInfo.password,userInfo.systemSN).then(response => {
+          debugger;
+          const data = response.body;
+          const tokenStr = data;
           setToken(tokenStr)
           commit('SET_TOKEN', tokenStr)
           resolve()
@@ -41,7 +44,7 @@ const user = {
     },
 
     // 获取账号详情
-    GetInfo({ commit, state }) {
+    GetInfo({commit, state}) {
       return new Promise((resolve, reject) => {
         getAccountDetail().then(response => {
           const data = response.data
@@ -55,7 +58,7 @@ const user = {
     },
 
     // 登出
-    LogOut({ commit, state }) {
+    LogOut({commit, state}) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
@@ -69,7 +72,7 @@ const user = {
     },
 
     // 前端 登出
-    FedLogOut({ commit }) {
+    FedLogOut({commit}) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         removeToken()

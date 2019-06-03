@@ -21,13 +21,13 @@
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="queryCriteriaObj" size="small" label-width="140px">
 
-          <!--<el-form-item label="账户编号：">-->
-          <!--<el-input v-model="queryCriteriaObj.sn_EQ" class="input-width" placeholder="账户编号（精准匹配）"></el-input>-->
-          <!--</el-form-item>-->
+          <el-form-item label="账户编号：">
+            <el-input v-model="queryCriteriaObj.sn_EQ" class="input-width" placeholder="账户编号（精准匹配）"></el-input>
+          </el-form-item>
 
-          <!--<el-form-item label="账户昵称：">-->
-          <!--<el-input v-model="queryCriteriaObj.nickName_LIKE" class="input-width" placeholder="账户昵称（模糊匹配）"></el-input>-->
-          <!--</el-form-item>-->
+          <el-form-item label="账户昵称：">
+            <el-input v-model="queryCriteriaObj.nickName_LIKE" class="input-width" placeholder="账户昵称（模糊匹配）"></el-input>
+          </el-form-item>
 
           <!--<el-form-item label="角色列表：">-->
           <!--<el-select v-model="queryCriteriaObj.O_roleSN_IN" class="input-width" placeholder="全部" clearable>-->
@@ -66,43 +66,6 @@
       <i class="el-icon-tickets"></i>
       <span>数据列表</span>
     </el-card>
-    <!--<div class="table-container">-->
-    <!--<el-table ref="orderTable"-->
-    <!--:data="list"-->
-    <!--style="width: 100%;"-->
-    <!--v-loading="listLoading" border>-->
-    <!--<el-table-column type="selection" width="60" align="center"></el-table-column>-->
-    <!--<el-table-column label="编号" width="180" align="center">-->
-    <!--<template slot-scope="scope">{{scope.row.id}}</template>-->
-    <!--</el-table-column>-->
-    <!--<el-table-column label="昵称" width="180" align="center">-->
-    <!--<template slot-scope="scope">{{scope.row.nickName}}</template>-->
-    <!--</el-table-column>-->
-    <!--<el-table-column label="注册IP" width="180" align="center">-->
-    <!--<template slot-scope="scope">{{scope.row.registerIP}}</template>-->
-    <!--</el-table-column>-->
-    <!--<el-table-column label="创建时间" width="180" align="center">-->
-    <!--<template slot-scope="scope">{{scope.row.ctime | formatDateTime}}</template>-->
-    <!--</el-table-column>-->
-    <!--<el-table-column label="最近更新时间" width="180" align="center">-->
-    <!--<template slot-scope="scope">{{scope.row.utime | formatDateTime}}</template>-->
-    <!--</el-table-column>-->
-    <!--<el-table-column label="操作" width="200" align="center">-->
-    <!--<template slot-scope="scope">-->
-    <!--<el-button-->
-    <!--size="mini"-->
-    <!--@click="handleDetail(scope.$index, scope.row)"-->
-    <!--&gt;查看详情-->
-    <!--</el-button>-->
-    <!--<el-button-->
-    <!--size="mini"-->
-    <!--type="danger"-->
-    <!--@click="handleDelete(scope.$index, scope.row)">删除-->
-    <!--</el-button>-->
-    <!--</template>-->
-    <!--</el-table-column>-->
-    <!--</el-table>-->
-    <!--</div>-->
 
     <div class="divs-container">
       <div class="divs-header">
@@ -149,7 +112,7 @@
               <!--<div class="operate-cell"-->
               <!--@click="handleDetail(1, item)"-->
               <!--&gt;-->
-              <span>查看详情</span>
+              <span @click="handleDetail(1, item)">查看详情</span>
               <!--</div>-->
               <!--<div class="operate-cell"-->
               <!--size="mini"-->
@@ -167,6 +130,9 @@
 
   </div>
 </template>
+<style rel="stylesheet/scss" lang="scss" scoped>
+  @import "src/styles/robert-tables.scss";
+</style>
 <script>
   import {fetchList, deleteAccount} from '@/api/account'
   import {fetchQueryList} from '@/api/role'
@@ -210,7 +176,7 @@
         this.getList();
       },
       handleDetail(index, row) {
-//        this.$router.push({path: "/user/account/detail", query: {id: row.id}})
+        this.$router.push({path: "/user/account/detail", query: {id: row.id}})
       },
       handleDelete(index, row) {
         this.$confirm('是否要进行该删除操作?', '提示', {
@@ -256,123 +222,6 @@
 <style scoped>
   .input-width {
     width: 203px;
-  }
-
-  .divs-container {
-    font-size: 12px;
-    margin-top: 10px;
-  }
-
-  @media screen and (min-width: 800px) {
-
-    .divs-container .divs-body .obj-row > div {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell {
-      display: inline-block;
-      vertical-align: middle;
-      border-right: 1px solid #d8e4f1;
-      border-bottom: 1px solid #d8e4f1;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell .obj-cell-label {
-      display: none;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell .obj-cell-value {
-      min-width: 100px;
-      width: 100%;
-      height: 30px;
-      line-height: 30px;
-      /*padding:0 10px;*/
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell:nth-child(1) .obj-cell-label {
-      border-left: 1px solid #d8e4f1;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell:nth-child(1) .obj-cell-value {
-      border-left: 1px solid #d8e4f1;
-    }
-
-    .divs-container .divs-body .obj-row:nth-child(1) .obj-cell .obj-cell-label {
-      /*padding:0 10px;*/
-      height: 30px;
-      line-height: 30px;
-      min-width: 100px;
-      width: 100%;
-      display: block;
-      text-align: center;
-      border-bottom: 1px solid #d8e4f1;
-      border-top: 1px solid #d8e4f1;
-    }
-
-  }
-
-  @media screen and (max-device-width: 400px) {
-
-    .divs-container .divs-body .obj-row {
-      border: 1px solid #d8e4f1;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell {
-      border-bottom: 1px solid #d8e4f1;
-      border-right: 1px solid #d8e4f1;
-      height: 37px;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell:nth-child(1) {
-      border-left: 1px solid #d8e4f1;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell > div:nth-child(1) {
-      border-right: 1px solid #d8e4f1;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell:nth-last-child(1) {
-      /*width: 100%;*/
-      /*height: 39px;*/
-      /*position: relative;*/
-      /*top: -86px;*/
-      /*align-items: center;*/
-      /*padding-top: 7px;*/
-      /*padding-left: 17px;*/
-      /*border-left: 1px solid #d8e4f1;*/
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell > div {
-      text-align: center;
-      font-weight: 500;
-      font-size: 14px;
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell .obj-cell-label {
-      width: 29%;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell > div span {
-      line-height: 37px;
-      vertical-align: middle;
-      text-align: center;
-      padding-left: 7px;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell > div {
-      text-align: left;
-    }
-
-    .divs-container .divs-body .obj-row .obj-cell .obj-cell-value {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      -o-text-overflow: ellipsis;
-      overflow: hidden;
-      max-width: 69%;
-    }
-
   }
 
 

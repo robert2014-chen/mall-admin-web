@@ -3,6 +3,7 @@
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
     <el-dropdown class="avatar-container" trigger="click">
+      <!--首页图片-->
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar">
         <i class="el-icon-caret-bottom"></i>

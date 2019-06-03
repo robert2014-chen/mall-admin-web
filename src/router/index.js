@@ -48,7 +48,7 @@ export const constantRouterMap = [
       {
         path: 'account/detail',
         name: 'detail',
-        component: () => import('@/views/user/account/detail'),
+        component: () => import('@/views/user/account/components/detail'),
         meta: {title: '账号详情'},
         hidden:true
       }

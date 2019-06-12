@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 export function login(account, password,systemSN) {
-  debugger;
+  // debugger;
   return request({
     url: '/user/rest/login',
     method: 'post',

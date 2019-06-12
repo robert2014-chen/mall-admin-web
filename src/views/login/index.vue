@@ -105,7 +105,7 @@
           if (valid) {
             this.loading = true;
             this.$store.dispatch('Login', this.loginForm).then(() => {
-              debugger;
+//              debugger;
               this.loading = false;
               this.$router.push({path: '/home'})
             }).catch(() => {

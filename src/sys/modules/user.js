@@ -31,7 +31,7 @@ const user = {
       const account = userInfo.account.trim()
       return new Promise((resolve, reject) => {
         login(account, userInfo.password,userInfo.systemSN).then(response => {
-          debugger;
+          // debugger;
           const data = response.body;
           const tokenStr = data;
           setToken(tokenStr)

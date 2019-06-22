@@ -3,7 +3,7 @@ import request from '@/utils/request'
 export function login(account, password,systemSN) {
   // debugger;
   return request({
-    url: '/user/rest/login',
+    url: 'user-sys-service/user-sys-service/user/rest/login',
     method: 'post',
     data: {
       account,

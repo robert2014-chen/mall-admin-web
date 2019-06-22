@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function fetchList(params) {
   return request({
-    url: 'user/mgt/account/list/page',
+    url: 'user-sys-service/user-sys-service/user/mgt/account/list/page',
     method: 'post',
     headers: {'Content-Type': 'application/json'},
     transformRequest: [function (data) {
@@ -14,14 +14,14 @@ export function fetchList(params) {
 
 export function deleteAccount(id) {
   return request({
-    url: 'user/mgt/account/delete/' + id,
+    url: 'user-sys-service/user-sys-service/user/mgt/account/delete/' + id,
     method: 'delete'
   })
 }
 
 export function getDetail(id) {
   return request({
-    url: 'user/mgt/account/' + id + '/detail',
+    url: 'user-sys-service/user-sys-service/user/mgt/account/' + id + '/detail',
     method: 'get'
   });
 }

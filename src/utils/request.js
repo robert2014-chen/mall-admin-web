@@ -32,7 +32,7 @@ service.interceptors.response.use(
     const res = response.data
     if (res.header.retStatus !== 'success') {
       Message({
-        message: res.header.msg.length < 10 ? res.header.msg : res.header.msg.substring(0, 10),
+        message: !(res.header.msg) ? "未知情况，请联系管理员再现！" : res.header.msg.length < 10 ? res.header.msg : res.header.msg.substring(0, 10),
         type: 'error',
         duration: 3 * 1000
       })

@@ -34,6 +34,7 @@
 </style>
 <script>
   import {getDetail} from '@/api/account';
+  import {getPersonByAccountSN} from '@/api/person';
 
   export default {
     name: 'detail',
@@ -49,6 +50,11 @@
       getDetail(this.$route.query.id).then(response => {
         console.log(response.body)
         this.account = response.body;
+        if (null != response.body && null != response.body.sn) {
+          getPersonByAccountSN(response.body.sn).then(r => {
+            this.person = r.body;
+          })
+        }
       })
     },
     methods: {

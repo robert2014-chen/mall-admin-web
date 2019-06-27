@@ -26,3 +26,9 @@ export function getDetail(id) {
   });
 }
 
+export function getPersonByAccountSN(sn) {
+  return request({
+    url:''
+  });
+}
+

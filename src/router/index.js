@@ -51,6 +51,18 @@ export const constantRouterMap = [
         component: () => import('@/views/user/account/components/detail'),
         meta: {title: '账号详情'},
         hidden:true
+      },
+      {
+        path: 'permissions',
+        name: 'permissions',
+        component: () => import('@/views/permission/permission/index'),
+        meta: {title: '权限列表', icon: 'product-list'}
+      },
+      {
+        path: 'roles',
+        name: 'roles',
+        component: () => import('@/views/role/role/index'),
+        meta: {title: '角色列表', icon: 'product-list'}
       }
     ]
   },

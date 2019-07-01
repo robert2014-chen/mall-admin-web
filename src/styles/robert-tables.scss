@@ -172,6 +172,23 @@
       font-size: 14px;
       text-align: center;
     }
+
+    .robert-confirm {
+      background-color: #27f;
+      color: white;
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+
+  .robert-btn{
+    display: inline-flex;
+    text-align: center;
+    padding: 5px 13px;
+    margin-left: 20px;
+    font-size: 14px;
+    color: white;
+    background-color: #27f;
   }
 
 }

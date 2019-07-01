@@ -19,7 +19,7 @@ import Layout from '../views/layout/Layout'
   }
  **/
 export const constantRouterMap = [
-  {path:'/login',component:()=>import('@/views/login/index'),hidden:true},
+  {path: '/login', component: () => import('@/views/login/index'), hidden: true},
   {path: '/404', component: () => import('@/views/404'), hidden: true},
   {
     path: '',
@@ -50,19 +50,25 @@ export const constantRouterMap = [
         name: 'detail',
         component: () => import('@/views/user/account/components/detail'),
         meta: {title: '账号详情'},
-        hidden:true
+        hidden: true
       },
       {
-        path: 'permissions',
-        name: 'permissions',
+        path: 'permission',
+        name: 'permission',
         component: () => import('@/views/permission/permission/index'),
         meta: {title: '权限列表', icon: 'product-list'}
       },
       {
-        path: 'roles',
-        name: 'roles',
+        path: 'role',
+        name: 'role',
         component: () => import('@/views/role/role/index'),
         meta: {title: '角色列表', icon: 'product-list'}
+      }, {
+        path: 'role/add',
+        name: 'roleAdd',
+        component: () => import("@/views/role/role/components/add"),
+        meta: {title: '新增角色'},
+        hidden: true
       }
     ]
   },

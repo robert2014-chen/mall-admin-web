@@ -65,6 +65,9 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
       <span>数据列表</span>
+
+      <span class="robert-btn" @click="showAdd">添加</span>
+
     </el-card>
 
     <div class="divs-container">
@@ -191,6 +194,9 @@
           this.list = response.body.list;
           this.total = response.body.total;
         });
+      },
+      showAdd(){
+        this.$router.push({path: "/user/role/add"});
       }
     }
   }

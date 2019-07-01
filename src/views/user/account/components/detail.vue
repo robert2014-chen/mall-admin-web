@@ -33,7 +33,7 @@
 
     </div>
     <div class="robert-oper">
-      <span class="robert-back" @click="accountList()">返回</span>
+      <span class="robert-back" @click="roleList()">返回</span>
     </div>
   </div>
 </template>

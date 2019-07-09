@@ -21,13 +21,13 @@
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="queryCriteriaObj" size="small" label-width="140px">
 
-          <!--          <el-form-item label="账户编号：">-->
-          <!--            <el-input v-model="queryCriteriaObj.sn_EQ" class="input-width" placeholder="账户编号（精准匹配）"></el-input>-->
-          <!--          </el-form-item>-->
+<!--          <el-form-item label="账户编号：">-->
+<!--            <el-input v-model="queryCriteriaObj.sn_EQ" class="input-width" placeholder="账户编号（精准匹配）"></el-input>-->
+<!--          </el-form-item>-->
 
-          <!--          <el-form-item label="账户昵称：">-->
-          <!--            <el-input v-model="queryCriteriaObj.nickName_LIKE" class="input-width" placeholder="账户昵称（模糊匹配）"></el-input>-->
-          <!--          </el-form-item>-->
+<!--          <el-form-item label="账户昵称：">-->
+<!--            <el-input v-model="queryCriteriaObj.nickName_LIKE" class="input-width" placeholder="账户昵称（模糊匹配）"></el-input>-->
+<!--          </el-form-item>-->
 
           <!--<el-form-item label="角色列表：">-->
           <!--<el-select v-model="queryCriteriaObj.O_roleSN_IN" class="input-width" placeholder="全部" clearable>-->
@@ -65,9 +65,6 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
       <span>数据列表</span>
-
-      <span class="robert-btn" @click="showAdd">添加</span>
-
     </el-card>
 
     <div class="divs-container">
@@ -77,18 +74,34 @@
         <div class="obj-row" v-for="item in list">
           <div class="obj-cell">
             <div class="obj-cell-label">
-              <span>角色名称</span>
+              <span>编码</span>
             </div>
             <div class="obj-cell-value">
-              <span>{{item.name}}</span>
+              <span>{{item.sn}}</span>
             </div>
           </div>
           <div class="obj-cell">
             <div class="obj-cell-label">
-              <span>角色编码</span>
+              <span>过滤链</span>
             </div>
             <div class="obj-cell-value">
-              <span>{{item.code}}</span>
+              <span>{{item.filterName}}</span>
+            </div>
+          </div>
+          <div class="obj-cell">
+            <div class="obj-cell-label">
+              <span>拦截地址</span>
+            </div>
+            <div class="obj-cell-value">
+              <span>{{item.filterUrl}}</span>
+            </div>
+          </div>
+          <div class="obj-cell">
+            <div class="obj-cell-label">
+              <span>系统</span>
+            </div>
+            <div class="obj-cell-value">
+              <span>{{item.systemSN}}</span>
             </div>
           </div>
           <div class="obj-cell">
@@ -99,13 +112,13 @@
               <!--<div class="operate-cell"-->
               <!--@click="handleDetail(1, item)"-->
               <!--&gt;-->
-              <!--              <span @click="handleDetail(1, item)">查看详情</span>-->
+              <!--<span @click="handleDetail(1, item)">查看详情</span>-->
               <!--</div>-->
               <!--<div class="operate-cell"-->
               <!--size="mini"-->
               <!--type="danger"-->
               <!--@click="handleDelete(1, item)">-->
-              <span @click="handleDelete(1, item)">删除</span>
+              <span>删除</span>
             </div>
             <!--</div>-->
           </div>
@@ -121,7 +134,7 @@
   @import "src/styles/robert-tables.scss";
 </style>
 <script>
-  import {fetchRoleList,deleteRole} from '@/api/rbac'
+  import {fetchFilterChainList} from '@/api/filterchain'
 
   const defaultListQuery = {
     startRow: 0,
@@ -130,7 +143,7 @@
     queryOrders: [{"propertyName": "ctime", "sort": false}]
   };
   export default {
-    name: "fetchList",
+    name: "filterList",
     data() {
       return {
         listQuery: Object.assign({}, defaultListQuery),
@@ -161,6 +174,7 @@
         this.getList();
       },
       handleDetail(index, row) {
+        // this.$router.push({path: "/user/account/detail", query: {id: row.id}})
       },
       handleDelete(index, row) {
         this.$confirm('是否要进行该删除操作?', '提示', {
@@ -168,16 +182,21 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          let params = new URLSearchParams();
-          deleteRole(row.id).then(response => {
-            this.$message({
-              message: '删除成功！',
-              type: 'success',
-              duration: 1000
-            });
-            this.getList();
-          });
+//          let params = new URLSearchParams();
+//          deleteAccount(row.id).then(response => {
+//            this.$message({
+//              message: '删除成功！',
+//              type: 'success',
+//              duration: 1000
+//            });
+//            this.getList();
+//          });
         })
+      },
+      initRoleData() {
+        fetchQueryList([]).then(response => {
+          this.roleData = response.body;
+        });
       },
       getList() {
         this.listLoading = true;
@@ -189,14 +208,11 @@
           });
         }
         this.listQuery['queryCriteria'] = queryCriteria;
-        fetchRoleList(this.listQuery).then(response => {
+        fetchFilterChainList(this.listQuery).then(response => {
           this.listLoading = false;
           this.list = response.body.list;
           this.total = response.body.total;
         });
-      },
-      showAdd(){
-        this.$router.push({path: "/user/role/add"});
       }
     }
   }

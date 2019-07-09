@@ -69,6 +69,12 @@ export const constantRouterMap = [
         component: () => import("@/views/role/role/components/add"),
         meta: {title: '新增角色'},
         hidden: true
+      },
+      {
+        path: 'filter',
+        name: 'filter',
+        component: () => import('@/views/filter/filter/index'),
+        meta: {title: '过滤链列表', icon: 'product-list'}
       }
     ]
   },

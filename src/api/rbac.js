@@ -24,6 +24,14 @@ export function addRole(params) {
   })
 }
 
+export function deleteRole(id) {
+  return request({
+    url: 'user-sys-service/user-sys-service/user/mgt/role/delete/'+id,
+    method: 'delete',
+    headers: {'Content-Type': 'application/json'}
+  })
+}
+
 export function fetchPermissionList(params) {
   return request({
     url: 'user-sys-service/user-sys-service/user/mgt/permission/list/page',

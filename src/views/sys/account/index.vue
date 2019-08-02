@@ -116,7 +116,6 @@
     data() {
       return {
         listQuery: Object.assign({}, defaultListQuery),
-        typeOptions: Object.assign({}, defaultTypeOptions),
         list: null,
         total: null,
         listLoading: false,

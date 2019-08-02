@@ -313,7 +313,13 @@ export const constantRouterMap = [
         name: 'account',
         component: () => import('@/views/sys/account/index'),
         meta: {title: '账号列表', icon: 'sms-flash'}
-      },{
+      }, {
+        path: 'addAccount',
+        name: 'addAccount',
+        component: () => import('@/views/sys/account/add'),
+        meta: {title: '添加账号', icon: 'sms-flash'},
+        hidden: true
+      }, {
         path: 'subject',
         name: 'subject',
         component: () => import('@/views/sys/subject/index'),

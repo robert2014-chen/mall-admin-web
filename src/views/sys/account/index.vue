@@ -47,11 +47,17 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="100" align="center">
+        <el-table-column label="编号" width="200" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="账号" align="center">
-          <template slot-scope="scope">{{scope.row.account}}</template>
+        <!--        <el-table-column label="账号" align="center">-->
+        <!--          <template slot-scope="scope">{{scope.row.account}}</template>-->
+        <!--        </el-table-column>-->
+        <el-table-column label="昵称" width="200" align="center">
+          <template slot-scope="scope">{{scope.row.nickName}}</template>
+        </el-table-column>
+        <el-table-column label="图像" width="200" align="center">
+          <template slot-scope="scope">{{scope.row.avatar}}</template>
         </el-table-column>
         <el-table-column label="注册IP" width="100" align="center">
           <template slot-scope="scope">{{scope.row.registerIP }}</template>
@@ -61,12 +67,6 @@
         </el-table-column>
         <el-table-column label="注册地区" width="140" align="center">
           <template slot-scope="scope">{{scope.row.regionCode}}</template>
-        </el-table-column>
-        <el-table-column label="昵称" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.nickName}}</template>
-        </el-table-column>
-        <el-table-column label="图像" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.avatar}}</template>
         </el-table-column>
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
@@ -134,24 +134,6 @@
         }
         return '';
       },
-      formatUseType(useType) {
-        if (useType === 0) {
-          return '全场通用';
-        } else if (useType === 1) {
-          return '指定分类';
-        } else {
-          return '指定商品';
-        }
-      },
-      formatPlatform(platform) {
-        if (platform === 1) {
-          return '移动平台';
-        } else if (platform === 2) {
-          return 'PC平台';
-        } else {
-          return '全平台';
-        }
-      },
       formatDate(time) {
         if (time == null || time === '') {
           return 'N/A';
@@ -189,7 +171,7 @@
         this.getList();
       },
       handleAdd() {
-        this.$router.push({path: '/sms/addCoupon'})
+        this.$router.push({path: '/sys/addAccount'})
       },
       handleView(index, row) {
         this.$router.push({path: '/sms/couponHistory', query: {id: row.id}})
@@ -216,8 +198,8 @@
         this.listLoading = true;
         fetchList(this.listQuery).then(response => {
           this.listLoading = false;
-          this.list = response.data.list;
-          this.total = response.data.total;
+          this.list = response.list;
+          this.total = response.total;
         });
       }
     }

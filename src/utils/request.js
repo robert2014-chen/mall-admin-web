@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+import {Message, MessageBox} from 'element-ui'
 import store from '../store'
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 
 axios.defaults.transformRequest = [function (data) {
   return JSON.stringify(data)
@@ -27,11 +27,11 @@ service.interceptors.request.use(config => {
 // respone拦截器
 service.interceptors.response.use(
   response => {
-  /**
-  * code为非200是抛错 可结合自己业务进行修改
-  */
+    /**
+     * code为非200是抛错 可结合自己业务进行修改
+     */
     const res = response.data
-    if (res.code !== 200) {
+    if (res.header.retStatus !== "success") {
       Message({
         message: res.message,
         type: 'error',
@@ -39,7 +39,7 @@ service.interceptors.response.use(
       })
 
       // 401:未登录;
-      if (res.code === 401||res.code === 403) {
+      if (res.code === 401 || res.code === 403) {
         MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
@@ -52,7 +52,7 @@ service.interceptors.response.use(
       }
       return Promise.reject('error')
     } else {
-      return response.data
+      return res.body
     }
   },
   error => {

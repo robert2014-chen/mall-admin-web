@@ -320,10 +320,16 @@ export const constantRouterMap = [
         meta: {title: '添加账号', icon: 'sms-flash'},
         hidden: true
       }, {
+        path: 'updateAccount',
+        name: 'updateAccount',
+        component: () => import('@/views/sys/account/update'),
+        meta: {title: '修改账号', icon: 'sms-flash'},
+        hidden: true
+      }, {
         path: 'subject',
         name: 'subject',
         component: () => import('@/views/sys/subject/index'),
-        meta: {title: '主体列表', icon: 'sms-flash'}
+        meta: {title: '主体列表', icon: 'el-icon-user-solid'}
       }
     ]
   },

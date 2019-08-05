@@ -6,7 +6,7 @@
              label-width="150px"
              size="small">
       <el-form-item label="账号：" prop="account">
-        <el-input v-model="account.account" class="input-width"></el-input>
+        <el-input v-model="account.account" class="input-width" :disabled="this.isEdit"></el-input>
       </el-form-item>
       <el-form-item label="昵称：" prop="nickName">
         <el-input v-model="account.nickName" class="input-width"></el-input>
@@ -28,7 +28,7 @@
   </el-card>
 </template>
 <script>
-  import {createAccount} from '@/api/account';
+  import {createAccount, fetchList, getAccount, updateAccount} from '@/api/account';
 
   const defaultAccount = {
     account: null,
@@ -46,15 +46,39 @@
       }
     },
     data() {
+      let validateAccountUnique = (rule, account, callback) => {
+        if (this.isEdit) {
+          callback();
+        } else {
+          fetchList({
+            queryOrders: [{propertyName: "id", sort: false}],
+            queryCriteria: [{
+              propertyName: "systemSN_EQ",
+              value: "SYSTEM-340539910304186368"
+            }, {propertyName: "account_EQ", value: account}],
+            pageNum: 1,
+            pageSize: 1
+          }).then(response => {
+            if (response.total > 0) {
+              callback(new Error("账号已存在"))
+            } else {
+              callback();
+            }
+          })
+        }
+      }
       return {
         account: Object.assign({}, defaultAccount),
         rules: {
           account: [
             {required: true, message: '请输入账号', trigger: 'blur'},
-            {min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur'}
+            {min: 6, max: 14, message: '长度在 6 到 14 个字符', trigger: 'blur'},
+            {
+              validator: validateAccountUnique, trigger: 'blur'
+            }
           ],
           nickName: [
-            {required: true, message: '请输入账号', trigger: 'blur'},
+            {required: true, message: '请输入昵称', trigger: 'blur'},
             {min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur'}
           ]
         }
@@ -62,9 +86,9 @@
     },
     created() {
       if (this.isEdit) {
-        // getCoupon(this.$route.query.id).then(response=>{
-        //   this.coupon=response.data;
-        // });
+        getAccount(this.$route.query.id).then(response => {
+          this.account = response;
+        });
       }
     },
     methods: {
@@ -77,15 +101,16 @@
               type: 'warning'
             }).then(() => {
               if (this.isEdit) {
-                // updateCoupon(this.$route.query.id,this.coupon).then(response=>{
-                //   this.$refs[formName].resetFields();
-                //   this.$message({
-                //     message: '修改成功',
-                //     type: 'success',
-                //     duration:1000
-                //   });
-                //   this.$router.back();
-                // });
+                this.account.id = this.$route.query.id;
+                updateAccount(this.account).then(response => {
+                  this.$refs[formName].resetFields();
+                  this.$message({
+                    message: '修改成功',
+                    type: 'success',
+                    duration: 1000
+                  });
+                  this.$router.back();
+                });
               } else {
                 createAccount(this.account).then(response => {
                   this.$refs[formName].resetFields();

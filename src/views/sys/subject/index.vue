@@ -18,22 +18,22 @@
           重置
         </el-button>
       </div>
-      <div style="margin-top: 15px">
-        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-          <el-form-item label="专题名称：">
-            <el-input v-model="listQuery.subjectName" class="input-width" placeholder="专题名称"></el-input>
-          </el-form-item>
-          <el-form-item label="推荐状态：">
-            <el-select v-model="listQuery.recommendStatus" placeholder="全部" clearable class="input-width">
-              <el-option v-for="item in recommendOptions"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-      </div>
+<!--      <div style="margin-top: 15px">-->
+<!--        <el-form :inline="true" :model="listQuery" size="small" label-width="140px">-->
+<!--          <el-form-item label="专题名称：">-->
+<!--            <el-input v-model="listQuery.subjectName" class="input-width" placeholder="专题名称"></el-input>-->
+<!--          </el-form-item>-->
+<!--          <el-form-item label="推荐状态：">-->
+<!--            <el-select v-model="listQuery.recommendStatus" placeholder="全部" clearable class="input-width">-->
+<!--              <el-option v-for="item in recommendOptions"-->
+<!--                         :key="item.value"-->
+<!--                         :label="item.label"-->
+<!--                         :value="item.value">-->
+<!--              </el-option>-->
+<!--            </el-select>-->
+<!--          </el-form-item>-->
+<!--        </el-form>-->
+<!--      </div>-->
     </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
@@ -50,25 +50,14 @@
         <el-table-column label="编号" width="120" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="专题名称" align="center">
-          <template slot-scope="scope">{{scope.row.subjectName}}</template>
+        <el-table-column label="姓名" align="center">
+          <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
-        <el-table-column label="是否推荐" width="200" align="center">
-          <template slot-scope="scope">
-            <el-switch
-              @change="handleRecommendStatusStatusChange(scope.$index, scope.row)"
-              :active-value="1"
-              :inactive-value="0"
-              v-model="scope.row.recommendStatus">
-            </el-switch>
+        <el-table-column label="出生日期" width="200" align="center">
+          <template slot-scope="scope">{{scope.row.birthDay}}
           </template>
         </el-table-column>
-        <el-table-column label="排序" width="160" align="center">
-          <template slot-scope="scope">{{scope.row.sort}}</template>
-        </el-table-column>
-        <el-table-column label="状态" width="160" align="center">
-          <template slot-scope="scope">{{scope.row.recommendStatus | formatRecommendStatus}}</template>
-        </el-table-column>
+
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button size="mini"
@@ -115,81 +104,21 @@
         :total="total">
       </el-pagination>
     </div>
-    <el-dialog title="选择专题" :visible.sync="selectDialogVisible" width="50%">
-      <el-input v-model="dialogData.listQuery.keyword"
-                style="width: 250px;margin-bottom: 20px"
-                size="small"
-                placeholder="专题名称搜索">
-        <el-button slot="append" icon="el-icon-search" @click="handleSelectSearch()"></el-button>
-      </el-input>
-      <el-table :data="dialogData.list"
-                @selection-change="handleDialogSelectionChange" border>
-        <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="专题名称" align="center">
-          <template slot-scope="scope">{{scope.row.title}}</template>
-        </el-table-column>
-        <el-table-column label="所属分类" width="160" align="center">
-          <template slot-scope="scope">{{scope.row.categoryName}}</template>
-        </el-table-column>
-        <el-table-column label="添加时间" width="160" align="center">
-          <template slot-scope="scope">{{scope.row.createTime | formatTime}}</template>
-        </el-table-column>
-      </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          background
-          @size-change="handleDialogSizeChange"
-          @current-change="handleDialogCurrentChange"
-          layout="prev, pager, next"
-          :current-page.sync="dialogData.listQuery.pageNum"
-          :page-size="dialogData.listQuery.pageSize"
-          :page-sizes="[5,10,15]"
-          :total="dialogData.total">
-        </el-pagination>
-      </div>
-      <div style="clear: both;"></div>
-      <div slot="footer">
-        <el-button  size="small" @click="selectDialogVisible = false">取 消</el-button>
-        <el-button  size="small" type="primary" @click="handleSelectDialogConfirm()">确 定</el-button>
-      </div>
-    </el-dialog>
-    <el-dialog title="设置排序"
-               :visible.sync="sortDialogVisible"
-               width="40%">
-      <el-form :model="sortDialogData"
-               label-width="150px">
-        <el-form-item label="排序：">
-          <el-input v-model="sortDialogData.sort" style="width: 200px"></el-input>
-        </el-form-item>
-      </el-form>
-      <span slot="footer">
-        <el-button @click="sortDialogVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="handleUpdateSort" size="small">确 定</el-button>
-      </span>
-    </el-dialog>
+
+
   </div>
 </template>
 <script>
-  import {fetchList,updateRecommendStatus,deleteHomeSubject,createHomeSubject,updateHomeSubjectSort} from '@/api/homeSubject';
-  import {fetchList as fetchSubjectList} from '@/api/subject';
+
   import {formatDate} from '@/utils/date';
 
   const defaultListQuery = {
-    pageNum: 1,
-    pageSize: 5,
-    subjectName: null,
-    recommendStatus: null
+    queryOrders: [{propertyName: "id", sort: false}],
+    queryCriteria: [{propertyName: "systemSN_EQ", value: "SYSTEM-340539910304186368"}],
+    pageNum: 1
   };
-  const defaultRecommendOptions = [
-    {
-      label: '未推荐',
-      value: 0
-    },
-    {
-      label: '推荐中',
-      value: 1
-    }
-  ];
+
+
   export default {
     name: 'homeSubjectList',
     data() {

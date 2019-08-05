@@ -102,7 +102,7 @@
   </div>
 </template>
 <script>
-  import {fetchList} from '@/api/account';
+  import {fetchList,deleteAccount} from '@/api/account';
   import {formatDate} from '@/utils/date';
 
   const defaultListQuery = {
@@ -140,14 +140,6 @@
         }
         let date = new Date(time);
         return formatDate(date, 'yyyy-MM-dd')
-      },
-      formatStatus(endTime) {
-        let now = new Date().getTime();
-        if (endTime > now) {
-          return '未过期'
-        } else {
-          return '已过期';
-        }
       }
     },
     methods: {
@@ -177,7 +169,7 @@
         this.$router.push({path: '/sms/couponHistory', query: {id: row.id}})
       },
       handleUpdate(index, row) {
-        this.$router.push({path: '/sms/updateCoupon', query: {id: row.id}})
+        this.$router.push({path: '/sys/updateAccount', query: {id: row.id}})
       },
       handleDelete(index, row) {
         this.$confirm('是否进行删除操作?', '提示', {
@@ -185,13 +177,13 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          // deleteCoupon(row.id).then(response => {
-          //   this.$message({
-          //     type: 'success',
-          //     message: '删除成功!'
-          //   });
-          //   this.getList();
-          // });
+          deleteAccount (row.id).then(response => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            this.getList();
+          });
         })
       },
       getList() {

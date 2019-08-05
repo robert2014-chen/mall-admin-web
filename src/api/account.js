@@ -24,8 +24,20 @@ export function createAccount(params) {
   })
 }
 
+export function updateAccount(params) {
+  return request({
+    url: '/mgt/account/update',
+    method: 'put',
+    headers: {'Content-Type': 'application/json'},
+    transformRequest: [function (data) {
+      return JSON.stringify(data);
+    }],
+    data: params
+  })
+}
+
 export function getAccount(id) {
-  const url = "/mgt/system/" + id + "/info"
+  const url = "/mgt/account/" + id + "/info"
   return request({
     url: url,
     method: 'get'
@@ -33,7 +45,7 @@ export function getAccount(id) {
 }
 
 export function deleteAccount(id) {
-  const url = "/mgt/system/" + id + "/delete"
+  const url = "/mgt/account/" + id + "/delete"
   return request({
     url: url,
     method: 'delete'

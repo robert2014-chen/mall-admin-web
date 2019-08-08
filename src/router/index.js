@@ -326,10 +326,22 @@ export const constantRouterMap = [
         meta: {title: '修改账号', icon: 'sms-flash'},
         hidden: true
       }, {
-        path: 'subject',
-        name: 'subject',
+        path: 'org',
+        name: 'org',
         component: () => import('@/views/sys/subject/index'),
-        meta: {title: '主体列表', icon: 'el-icon-user-solid'}
+        meta: {title: '机构列表', icon: 'el-icon-user-solid'}
+      }, {
+        path: 'addOrg',
+        name: 'addOrg',
+        component: () => import('@/views/sys/subject/add'),
+        meta: {title: '添加机构', icon: 'sms-flash'},
+        hidden: true
+      }, {
+        path: 'updateOrg',
+        name: 'updateOrg',
+        component: () => import('@/views/sys/subject/update'),
+        meta: {title: '修改机构', icon: 'sms-flash'},
+        hidden: true
       }
     ]
   },

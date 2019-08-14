@@ -23,15 +23,6 @@
           <el-form-item label="账号：">
             <el-input v-model="listQuery.name" class="input-width" placeholder="账号"></el-input>
           </el-form-item>
-          <!--          <el-form-item label="：">-->
-          <!--            <el-select v-model="listQuery.type" placeholder="全部" clearable class="input-width">-->
-          <!--              <el-option v-for="item in typeOptions"-->
-          <!--                         :key="item.value"-->
-          <!--                         :label="item.label"-->
-          <!--                         :value="item.value">-->
-          <!--              </el-option>-->
-          <!--            </el-select>-->
-          <!--          </el-form-item>-->
         </el-form>
       </div>
     </el-card>
@@ -42,17 +33,13 @@
     </el-card>
     <div class="table-container">
       <el-table :data="list"
-                style="width: 100%;"
-                row-key="id"
-                v-loading="listLoading" border
-                lazy  :tree-props="{ hasChildren: 'id'}">
-<!--        <el-table-column type="selection" width="60" align="center"></el-table-column>-->
+                style="width: 100%;">
+<!--                row-key="id"-->
+<!--                v-loading="listLoading" border-->
+<!--                lazy :load="loadByParentSN" :tree-props="{ hasChildren: 'sn'}"-->
         <el-table-column label="编号" width="200" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <!--        <el-table-column label="账号" align="center">-->
-        <!--          <template slot-scope="scope">{{scope.row.account}}</template>-->
-        <!--        </el-table-column>-->
         <el-table-column label="名称" width="200" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
@@ -190,6 +177,15 @@
           this.list = response.list;
           this.total = response.total;
         });
+      },
+      loadByParentSN(tree, treeNode, resolve) {
+        resolve([]);
+        // this.listLoading = true;
+        // let query = Object.assign({queryCriteria: [{propertyName: "parentSN_EQ", value: tree.sn}]}, defaultListQuery);
+        // fetchList(query).then(response => {
+        //   this.listLoading = false;
+        //   resolve(response.list)
+        // })
       }
     }
   }

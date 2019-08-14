@@ -6,13 +6,10 @@
              label-width="150px"
              size="small">
       <el-form-item label="机构名称：" prop="name">
-        <el-input v-model="org.name" class="input-width" :disabled="this.isEdit"></el-input>
+        <el-input v-model="org.name" class="input-width"></el-input>
       </el-form-item>
       <el-form-item label="上级机构：" prop="parentOrgSN">
-        <el-select v-model="org.parentOrgSN" filterable remote reserve-keyword placeholder="请输入上级机构名称"
-                   :remote-method="getOrgByName" :loading="loading">
-          <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.sn"></el-option>
-        </el-select>
+        <el-cascader v-model="org.parentOrgSN" :props="orgs" clearable></el-cascader>
       </el-form-item>
       <el-form-item label="机构类型：" prop="nickName">
         <el-input v-model="org.orgType" class="input-width"></el-input>
@@ -37,12 +34,13 @@
   import {createOrg, fetchList, getOrg, updateOrg} from '@/api/org';
 
   const defaultOrg = {
-    account: null,
-    nickName: null,
-    avatar: "",
     systemSN: "SYSTEM-340539910304186368"
   };
-
+  const defaultListQuery = {
+    queryOrders: [{propertyName: "id", sort: false}],
+    queryCriteria: [{propertyName: "systemSN_EQ", value: "SYSTEM-340539910304186368"}],
+    pageNum: 1
+  };
   export default {
     name: 'orgDetail',
     props: {
@@ -54,10 +52,59 @@
     data() {
 
       return {
-        options: [],//上级组织机构
+        // options: [],//上级组织机构
         org: Object.assign({}, defaultOrg),
         rules: {
-          name: [{required: true, message: '请输入账号', trigger: 'blur'}]
+          name: [{required: true, message: '请输入机构名词', trigger: 'blur'}],
+          orgType: [{required: true, message: '请输入机构内型', trigger: 'blur'}]
+        },
+        orgs: {
+          emitPath: false,//只返回当前节点的value
+          checkStrictly: true,//可以选择非叶子节点
+          lazy: true,//开启动态加载
+          lazyLoad(node, resolve) { //设置加载数据源的方法：node——当前点击的节点，resolve——为数据加载完成的回调
+            if (!!!node.value) {
+              //node为空
+              fetchList({
+                queryOrders: [{propertyName: "id", sort: false}],
+                queryCriteria: [{propertyName: "systemSN_EQ", value: "SYSTEM-340539910304186368"}, {
+                  propertyName: "parentOrgSN_IS",
+                  value: null
+                }],
+                pageNum: 1
+              }).then(response => {
+                if (!!!response.list) {
+                  resolve([]);
+                } else {
+                  const nodes = response.list.map(item => ({
+                    value: item.sn,
+                    label: item.name
+                  }));
+                  resolve(nodes);
+                }
+              });
+            } else {
+              fetchList({
+                queryOrders: [{propertyName: "id", sort: false}],
+                queryCriteria: [{propertyName: "systemSN_EQ", value: "SYSTEM-340539910304186368"}, {
+                  propertyName: "parentOrgSN_EQ",
+                  value: node.value
+                }],
+                pageNum: 1
+              }).then(response => {
+                if (!!!response.list) {
+                  resolve([]);
+                } else {
+                  const nodes = response.list.map(item => ({
+                    value: item.sn,
+                    label: item.name
+                  }));
+                  resolve(nodes);
+                }
+              });
+            }
+
+          }
         }
       }
     },
@@ -113,22 +160,6 @@
       resetForm(formName) {
         this.$refs[formName].resetFields();
         this.org = Object.assign({}, defaultOrg);
-      },
-      getOrgByName(orgName) {
-        if (!!!orgName) {
-          this.options = [];
-        } else {
-          this.loading = true;
-          let query = {
-            queryOrders: [{propertyName: "id", sort: false}],
-            queryCriteria: [{propertyName: "systemSN_EQ", value: "SYSTEM-340539910304186368"}]
-          };
-          query.queryCriteria.push({propertyName: "name_LIKE", value: orgName});
-          fetchList(query).then(response => {
-            this.loading = false;
-            this.options = response.list;
-          });
-        }
       }
     }
   }

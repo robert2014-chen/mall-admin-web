@@ -34,9 +34,6 @@
     <div class="table-container">
       <el-table :data="list"
                 style="width: 100%;">
-<!--                row-key="id"-->
-<!--                v-loading="listLoading" border-->
-<!--                lazy :load="loadByParentSN" :tree-props="{ hasChildren: 'sn'}"-->
         <el-table-column label="编号" width="200" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
@@ -177,15 +174,6 @@
           this.list = response.list;
           this.total = response.total;
         });
-      },
-      loadByParentSN(tree, treeNode, resolve) {
-        resolve([]);
-        // this.listLoading = true;
-        // let query = Object.assign({queryCriteria: [{propertyName: "parentSN_EQ", value: tree.sn}]}, defaultListQuery);
-        // fetchList(query).then(response => {
-        //   this.listLoading = false;
-        //   resolve(response.list)
-        // })
       }
     }
   }

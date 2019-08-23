@@ -329,7 +329,12 @@ export const constantRouterMap = [
         path: 'org',
         name: 'org',
         component: () => import('@/views/sys/subject/index'),
-        meta: {title: '机构列表', icon: 'el-icon-user-solid'}
+        meta: {title: '商城列表', icon: 'el-icon-user-solid'}
+      },  {
+        path: 'shop',
+        name: 'shop',
+        component: () => import('@/views/sys/subject/shop'),
+        meta: {title: '门店列表', icon: 'el-icon-user-solid'}
       }, {
         path: 'addOrg',
         name: 'addOrg',

@@ -65,10 +65,6 @@
 <!--            </el-button>-->
             <el-button size="mini"
                        type="text"
-                       @click="handleShop(scope.$index, scope.row)">门店
-            </el-button>
-            <el-button size="mini"
-                       type="text"
                        @click="handleUpdate(scope.$index, scope.row)">
               编辑
             </el-button>
@@ -165,9 +161,6 @@
       handleView(index, row) {
         this.$router.push({path: '/sms/couponHistory', query: {id: row.id}})
       },
-      handleShop(index, row) {
-        this.$router.push({path: '/sys/shop', query: {sn: row.sn}})
-      },
       handleUpdate(index, row) {
         this.$router.push({path: '/sys/updateOrg', query: {id: row.id}})
       },
@@ -190,7 +183,9 @@
         })
       },
       getList() {
+        debugger;
         this.listLoading = true;
+        this.listQuery.queryCriteria.push({"propertyName": "parentOrgSN_EQ", value: this.$route.query.sn})
         fetchList(this.listQuery).then(response => {
           this.listLoading = false;
           this.list = response.list;

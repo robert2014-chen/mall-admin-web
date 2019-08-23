@@ -14,35 +14,6 @@
       <el-form-item label="机构类型：" prop="nickName">
         <el-input v-model="org.orgType" class="input-width"></el-input>
       </el-form-item>
-      <el-form-item label="机构地址">
-        <el-select v-model="org.province" style="width: 129px;" placeholder="请选择省份" @change="cityList">
-          <el-option
-            v-for="item in provinces"
-            :key="item.sn"
-            :label="item.name"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <el-select v-model="org.city" style="width: 129px;" placeholder="请选择市（区）" @change="countryList">
-          <el-option
-            v-for="item in cities"
-            :key="item.sn"
-            :label="item.name"
-            :value="item.value">
-          </el-option>
-        </el-select>
-        <el-select v-model="org.country" style="width: 129px;" placeholder="请选择县（市、区）">
-          <el-option
-            v-for="item in countries"
-            :key="item.sn"
-            :label="item.name"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="机构详细地址">
-        <el-input v-model="org.detail" class="input-width" placeholder="机构详细地址"></el-input>
-      </el-form-item>
       <el-form-item label="备注：">
         <el-input
           class="input-width"
@@ -60,13 +31,10 @@
   </el-card>
 </template>
 <script>
-  import {createOrg, fetchList, getOrgDto, updateOrg, fetchDictList} from '@/api/org';
+  import {createOrg, fetchList, getOrg, updateOrg} from '@/api/org';
 
   const defaultOrg = {
     systemSN: "SYSTEM-340539910304186368"
-  };
-  const defualtQueryOrder = {
-    queryOrders: [{propertyName: "id", sort: false}, {propertyName: "sortNum", sort: true}]
   };
   const defaultListQuery = {
     queryOrders: [{propertyName: "id", sort: false}],
@@ -90,9 +58,6 @@
           name: [{required: true, message: '请输入机构名词', trigger: 'blur'}],
           orgType: [{required: true, message: '请输入机构内型', trigger: 'blur'}]
         },
-        provinces: [],
-        cities: [],
-        countries: [],
         orgs: {
           emitPath: false,//只返回当前节点的value
           checkStrictly: true,//可以选择非叶子节点
@@ -145,52 +110,12 @@
     },
     created() {
       if (this.isEdit) {
-        getOrgDto(this.$route.query.id).then(response => {
+        getOrg(this.$route.query.id).then(response => {
           this.org = response;
-          if (!!this.org.province) {
-            this.cityList(this.org.province)
-          }
-          if (!!this.org.city) {
-            this.countryList(this.org.city)
-          }
         });
       }
-      this.provinceList();
     },
     methods: {
-      provinceList: function () {
-        let query = Object.assign({
-          queryCriteria: [{
-            propertyName: "parentDict_EQ",
-            value: "000000000000"
-          }]
-        }, defualtQueryOrder);
-        fetchDictList(query).then(response => {
-          this.provinces = response.data;
-        });
-      },
-      cityList: function (value) {
-        let query = Object.assign({
-          queryCriteria: [{
-            propertyName: "parentDict_EQ",
-            value: value
-          }]
-        }, defualtQueryOrder);
-        fetchDictList(query).then(response => {
-          this.cities = response.data;
-        });
-      },
-      countryList: function (value) {
-        let query = Object.assign({
-          queryCriteria: [{
-            propertyName: "parentDict_EQ",
-            value: value
-          }]
-        }, defualtQueryOrder);
-        fetchDictList(query).then(response => {
-          this.countries = response.data;
-        });
-      },
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
